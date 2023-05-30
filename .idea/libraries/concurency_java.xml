@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="concurency-java">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/jcip-examples-src.jar.src.zip!/" />
+      <root url="jar://$PROJECT_DIR$/jcip-annotations-src.jar.src.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
