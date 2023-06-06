@@ -1,7 +1,7 @@
 package com.abc.concurrency.guardedby;
 
 import com.abc.annotations.GuardedBy;
-import net.jcip.annotations.*;
+//import net.jcip.annotations.*;
 
 /**
  * PrivateLock

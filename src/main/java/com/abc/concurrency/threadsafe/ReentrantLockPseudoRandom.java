@@ -4,7 +4,7 @@ import java.util.concurrent.locks.*;
 
 import com.abc.annotations.ThreadSafe;
 import com.abc.concurrency.PseudoRandom;
-import net.jcip.annotations.*;
+//import net.jcip.annotations.*;
 
 /**
  * ReentrantLockPseudoRandom

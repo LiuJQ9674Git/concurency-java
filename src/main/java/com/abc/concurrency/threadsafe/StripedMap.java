@@ -1,7 +1,7 @@
 package com.abc.concurrency.threadsafe;
 
 import com.abc.annotations.ThreadSafe;
-import net.jcip.annotations.*;
+//import net.jcip.annotations.*;
 
 /**
  * StripedMap

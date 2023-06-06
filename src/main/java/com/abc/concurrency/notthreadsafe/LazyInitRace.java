@@ -1,7 +1,7 @@
 package com.abc.concurrency.notthreadsafe;
 
 import com.abc.annotations.NotThreadSafe;
-import net.jcip.annotations.*;
+//import net.jcip.annotations.*;
 
 /**
  * LazyInitRace

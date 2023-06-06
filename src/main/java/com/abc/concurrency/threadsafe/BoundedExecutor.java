@@ -3,7 +3,7 @@ package com.abc.concurrency.threadsafe;
 import java.util.concurrent.*;
 
 import com.abc.annotations.ThreadSafe;
-import net.jcip.annotations.*;
+//import net.jcip.annotations.*;
 
 /**
  * BoundedExecutor

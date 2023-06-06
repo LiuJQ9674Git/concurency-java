@@ -1,7 +1,7 @@
 package com.abc.concurrency.immutable;
 
 import com.abc.annotations.Immutable;
-import net.jcip.annotations.*;
+//import net.jcip.annotations.*;
 
 /**
  * Point

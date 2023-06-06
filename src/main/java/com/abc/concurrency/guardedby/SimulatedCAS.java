@@ -2,7 +2,7 @@ package com.abc.concurrency.guardedby;
 
 import com.abc.annotations.GuardedBy;
 import com.abc.annotations.ThreadSafe;
-import net.jcip.annotations.*;
+//import net.jcip.annotations.*;
 
 /**
  * SimulatedCAS

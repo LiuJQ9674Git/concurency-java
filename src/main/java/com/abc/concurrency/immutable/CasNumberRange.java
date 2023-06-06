@@ -4,7 +4,7 @@ import java.util.concurrent.atomic.*;
 
 import com.abc.annotations.Immutable;
 import com.abc.annotations.ThreadSafe;
-import net.jcip.annotations.*;
+//import net.jcip.annotations.*;
 
 /**
  * CasNumberRange
