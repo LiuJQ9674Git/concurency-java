@@ -1,4 +1,4 @@
-package com.abc.concurrency.guardedby;
+package com.abc.concurrency.nonblock;
 
 import com.abc.annotations.GuardedBy;
 import com.abc.annotations.ThreadSafe;

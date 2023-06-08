@@ -1,4 +1,4 @@
-package com.abc.concurrency.threadsafe;
+package com.abc.concurrency.collection;
 
 import java.util.*;
 

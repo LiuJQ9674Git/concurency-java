@@ -1,19 +1,11 @@
-package com.abc.concurrency.guardedby;
+package com.abc.concurrency.vehicletracker;
 
 import java.util.*;
 
 import com.abc.annotations.GuardedBy;
 import com.abc.annotations.ThreadSafe;
-import com.abc.concurrency.notthreadsafe.MutablePoint;
-import net.jcip.annotations.*;
 
-/**
- * MonitorVehicleTracker
- * <p/>
- * Monitor-based vehicle tracker implementation
- *
- * @author Brian Goetz and Tim Peierls
- */
+
 @ThreadSafe
  public class MonitorVehicleTracker {
     @GuardedBy("this") private final Map<String, MutablePoint> locations;

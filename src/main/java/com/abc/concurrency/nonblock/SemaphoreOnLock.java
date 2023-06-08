@@ -1,19 +1,11 @@
-package com.abc.concurrency.guardedby;
+package com.abc.concurrency.nonblock;
 
 import java.util.concurrent.locks.*;
 
 import com.abc.annotations.GuardedBy;
 import com.abc.annotations.ThreadSafe;
-//import net.jcip.annotations.*;
 
-/**
- * SemaphoreOnLock
- * <p/>
- * Counting semaphore implemented using Lock
- * (Not really how java.util.concurrent.Semaphore is implemented)
- *
- * @author Brian Goetz and Tim Peierls
- */
+
 @ThreadSafe
 public class SemaphoreOnLock {
     private final Lock lock = new ReentrantLock();

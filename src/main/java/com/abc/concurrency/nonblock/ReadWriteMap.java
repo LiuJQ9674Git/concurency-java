@@ -1,4 +1,4 @@
-package com.abc.concurrency;
+package com.abc.concurrency.nonblock;
 
 import java.util.*;
 import java.util.concurrent.locks.*;

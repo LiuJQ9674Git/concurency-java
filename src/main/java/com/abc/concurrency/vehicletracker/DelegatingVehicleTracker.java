@@ -1,4 +1,4 @@
-package com.abc.concurrency.threadsafe;
+package com.abc.concurrency.vehicletracker;
 
 import java.util.*;
 import java.util.concurrent.*;

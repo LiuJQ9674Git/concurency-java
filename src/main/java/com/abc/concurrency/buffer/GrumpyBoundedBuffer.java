@@ -1,18 +1,12 @@
-package com.abc.concurrency.threadsafe;
+package com.abc.concurrency.buffer;
 
 import com.abc.annotations.ThreadSafe;
 //import net.jcip.annotations.*;
-import com.abc.concurrency.guardedby.BaseBoundedBuffer;
 
-/**
- * GrumpyBoundedBuffer
- * <p/>
- * Bounded buffer that balks when preconditions are not met
- *
- * @author Brian Goetz and Tim Peierls
- */
+
 @ThreadSafe
-        public class GrumpyBoundedBuffer <V> extends BaseBoundedBuffer<V> {
+public class GrumpyBoundedBuffer <V> extends BaseBoundedBuffer<V> {
+
     public GrumpyBoundedBuffer() {
         this(100);
     }

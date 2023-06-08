@@ -1,4 +1,4 @@
-package com.abc.concurrency;
+package com.abc.concurrency.collection;
 
 import java.util.*;
 

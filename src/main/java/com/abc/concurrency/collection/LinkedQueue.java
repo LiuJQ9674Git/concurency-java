@@ -1,9 +1,8 @@
-package com.abc.concurrency.threadsafe;
+package com.abc.concurrency.collection;
 
 import java.util.concurrent.atomic.*;
 
 import com.abc.annotations.ThreadSafe;
-//import net.jcip.annotations.*;
 
 /**
  * LinkedQueue

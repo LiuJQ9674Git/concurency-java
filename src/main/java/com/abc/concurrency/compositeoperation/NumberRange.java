@@ -1,14 +1,6 @@
-package com.abc.concurrency;
+package com.abc.concurrency.compositeoperation;
 
 import java.util.concurrent.atomic.*;
-
-/**
- * NumberRange
- * <p/>
- * Number range class that does not sufficiently protect its invariants
- *
- * @author Brian Goetz and Tim Peierls
- */
 
 public class NumberRange {
     // INVARIANT: lower <= upper

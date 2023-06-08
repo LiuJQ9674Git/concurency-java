@@ -1,4 +1,4 @@
-package com.abc.concurrency.notthreadsafe;
+package com.abc.concurrency.vehicletracker;
 
 import com.abc.annotations.NotThreadSafe;
 //import net.jcip.annotations.*;

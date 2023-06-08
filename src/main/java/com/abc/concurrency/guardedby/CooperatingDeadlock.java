@@ -4,7 +4,7 @@ import java.util.*;
 
 import com.abc.annotations.GuardedBy;
 import com.abc.concurrency.immutable.Point;
-import net.jcip.annotations.*;
+//import net.jcip.annotations.*;
 
 /**
  * CooperatingDeadlock

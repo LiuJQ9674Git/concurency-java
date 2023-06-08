@@ -1,14 +1,9 @@
-package com.abc.concurrency.guardedby;
+package com.abc.concurrency.vehicletracker;
 
 import com.abc.annotations.GuardedBy;
 import com.abc.annotations.ThreadSafe;
-//import net.jcip.annotations.*;
 
-/**
- * SafePoint
- *
- * @author Brian Goetz and Tim Peierls
- */
+
 @ThreadSafe
 public class SafePoint {
     @GuardedBy("this") private int x, y;

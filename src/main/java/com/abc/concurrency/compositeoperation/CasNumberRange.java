@@ -1,20 +1,13 @@
-package com.abc.concurrency.immutable;
+package com.abc.concurrency.compositeoperation;
 
 import java.util.concurrent.atomic.*;
 
 import com.abc.annotations.Immutable;
 import com.abc.annotations.ThreadSafe;
-//import net.jcip.annotations.*;
 
-/**
- * CasNumberRange
- * <p/>
- * Preserving multivariable invariants using CAS
- *
- * @author Brian Goetz and Tim Peierls
- */
+
 @ThreadSafe
-        public class CasNumberRange {
+ public class CasNumberRange {
     @Immutable
        private static class IntPair {
         // INVARIANT: lower <= upper

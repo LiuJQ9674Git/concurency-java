@@ -3,7 +3,7 @@ package com.abc.concurrency.guardedby;
 import java.util.*;
 
 import com.abc.annotations.GuardedBy;
-import net.jcip.annotations.*;
+//import net.jcip.annotations.*;
 
 /**
  * HiddenIterator

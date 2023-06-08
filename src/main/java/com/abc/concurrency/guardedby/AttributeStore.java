@@ -5,7 +5,7 @@ import java.util.regex.*;
 
 import com.abc.annotations.GuardedBy;
 import com.abc.annotations.ThreadSafe;
-import net.jcip.annotations.*;
+//import net.jcip.annotations.*;
 
 /**
  * AttributeStore

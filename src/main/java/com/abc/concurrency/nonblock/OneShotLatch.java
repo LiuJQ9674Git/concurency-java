@@ -1,17 +1,10 @@
-package com.abc.concurrency.threadsafe;
+package com.abc.concurrency.nonblock;
 
 import java.util.concurrent.locks.*;
 
 import com.abc.annotations.ThreadSafe;
-//import net.jcip.annotations.*;
 
-/**
- * OneShotLatch
- * <p/>
- * Binary latch using AbstractQueuedSynchronizer
- *
- * @author Brian Goetz and Tim Peierls
- */
+
 @ThreadSafe
 public class OneShotLatch {
     private final Sync sync = new Sync();

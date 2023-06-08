@@ -1,11 +1,9 @@
-package com.abc.concurrency.threadsafe;
+package com.abc.concurrency.vehicletracker;
 
 import java.util.*;
 import java.util.concurrent.*;
 
 import com.abc.annotations.ThreadSafe;
-//import net.jcip.annotations.*;
-import com.abc.concurrency.guardedby.SafePoint;
 
 /**
  * PublishingVehicleTracker

@@ -1,18 +1,10 @@
-package com.abc.concurrency.threadsafe;
+package com.abc.concurrency.buffer;
 
 import com.abc.annotations.ThreadSafe;
-//import net.jcip.annotations.*;
-import com.abc.concurrency.guardedby.BaseBoundedBuffer;
 
-/**
- * SleepyBoundedBuffer
- * <p/>
- * Bounded buffer using crude blocking
- *
- * @author Brian Goetz and Tim Peierls
- */
+
 @ThreadSafe
-        public class SleepyBoundedBuffer <V> extends BaseBoundedBuffer<V> {
+public class SleepyBoundedBuffer <V> extends BaseBoundedBuffer<V> {
     int SLEEP_GRANULARITY = 60;
 
     public SleepyBoundedBuffer() {

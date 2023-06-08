@@ -1,19 +1,12 @@
-package com.abc.concurrency.threadsafe;
+package com.abc.concurrency.collection;
 
 import java.util.concurrent.atomic.*;
 
 import com.abc.annotations.ThreadSafe;
-//import net.jcip.annotations.*;
 
-/**
- * ConcurrentStack
- * <p/>
- * Nonblocking stack using Treiber's algorithm
- *
- * @author Brian Goetz and Tim Peierls
- */
+
 @ThreadSafe
-        public class ConcurrentStack <E> {
+public class ConcurrentStack <E> {
     AtomicReference<Node<E>> top = new AtomicReference<Node<E>>();
 
     public void push(E item) {

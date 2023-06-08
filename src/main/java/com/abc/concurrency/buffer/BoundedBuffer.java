@@ -1,8 +1,6 @@
-package com.abc.concurrency.threadsafe;
+package com.abc.concurrency.buffer;
 
 import com.abc.annotations.ThreadSafe;
-//import net.jcip.annotations.*;
-import com.abc.concurrency.guardedby.BaseBoundedBuffer;
 
 /**
  * BoundedBuffer
