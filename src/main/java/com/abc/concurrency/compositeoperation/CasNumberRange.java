@@ -35,7 +35,8 @@ import com.abc.annotations.ThreadSafe;
         while (true) {
             IntPair oldv = values.get();
             if (i > oldv.upper)
-                throw new IllegalArgumentException("Can't set lower to " + i + " > upper");
+                throw new IllegalArgumentException("Can't set lower to "
+                                                   + i + " > upper");
             IntPair newv = new IntPair(i, oldv.upper);
             if (values.compareAndSet(oldv, newv))
                 return;
@@ -46,7 +47,8 @@ import com.abc.annotations.ThreadSafe;
         while (true) {
             IntPair oldv = values.get();
             if (i < oldv.lower)
-                throw new IllegalArgumentException("Can't set upper to " + i + " < lower");
+                throw new IllegalArgumentException("Can't set upper to "
+                                                   + i + " < lower");
             IntPair newv = new IntPair(oldv.lower, i);
             if (values.compareAndSet(oldv, newv))
                 return;

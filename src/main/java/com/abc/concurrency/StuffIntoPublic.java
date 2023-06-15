@@ -13,4 +13,10 @@ public class StuffIntoPublic {
     public void initialize() {
         holder = new Holder(42);
     }
+
+    static class Holder{
+        Holder(int n){
+
+        }
+    }
 }

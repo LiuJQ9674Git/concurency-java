@@ -9,8 +9,10 @@ package com.abc.concurrency;
  */
 public class Holder {
     private int n;
-
-    public Holder(int n) {
+    //private final int n;
+    //private volatile int n
+    //public static Holder holder=new Holder(42);
+    private Holder(int n) {
         this.n = n;
     }
 
@@ -19,3 +21,4 @@ public class Holder {
             throw new AssertionError("This statement is false.");
     }
 }
+

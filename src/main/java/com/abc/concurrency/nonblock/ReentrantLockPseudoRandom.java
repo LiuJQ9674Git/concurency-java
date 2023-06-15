@@ -33,4 +33,9 @@ public class ReentrantLockPseudoRandom extends PseudoRandom {
             lock.unlock();
         }
     }
+
+    public static void main(String[] args){
+        ReentrantLockPseudoRandom reentrantLockPseudoRandom=new ReentrantLockPseudoRandom(2);
+        reentrantLockPseudoRandom.nextInt(1);
+    }
 }
