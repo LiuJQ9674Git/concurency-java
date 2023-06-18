@@ -1,7 +1,6 @@
 package com.abc.concurrency.collection;
 
 import java.util.concurrent.atomic.*;
-
 import com.abc.annotations.ThreadSafe;
 
 /**

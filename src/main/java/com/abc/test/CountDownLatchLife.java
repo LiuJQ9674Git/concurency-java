@@ -8,8 +8,8 @@ public class CountDownLatchLife {
     public  static void main(String[] args) throws InterruptedException {
         //CountDownLatch startSignal = new CountDownLatch(1);
         CountDownLatch doneSignal = new CountDownLatch(1);
-        //doneSignal.await();
-        doneSignal.countDown();
+        doneSignal.await();
+        //doneSignal.countDown();
         //Thread.interrupted();
 
 
