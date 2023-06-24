@@ -24,8 +24,7 @@ public final class BlockingWaitStrategy implements WaitStrategy
                         final Sequence[] dependents, final SequenceBarrier barrier)
         throws AlertException, InterruptedException {
         long availableSequence;
-        if ((availableSequence = cursor.get()) < sequence)
-        {
+        if ((availableSequence = cursor.get()) < sequence) {
             lock.lock();
             try
             {
@@ -36,14 +35,12 @@ public final class BlockingWaitStrategy implements WaitStrategy
                     processorNotifyCondition.await(1, MILLISECONDS);
                 }
             }
-            finally
-            {
+            finally {
                 --numWaiters;
                 lock.unlock();
             }
         }
-        if (0 != dependents.length)
-        {
+        if (0 != dependents.length) {
             while ((availableSequence = getMinimumSequence(dependents)) < sequence)
             {
                 barrier.checkAlert();
