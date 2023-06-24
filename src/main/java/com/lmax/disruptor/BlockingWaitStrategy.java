@@ -22,8 +22,7 @@ public final class BlockingWaitStrategy implements WaitStrategy
     @Override
     public long waitFor(final long sequence, final Sequence cursor,
                         final Sequence[] dependents, final SequenceBarrier barrier)
-        throws AlertException, InterruptedException
-    {
+        throws AlertException, InterruptedException {
         long availableSequence;
         if ((availableSequence = cursor.get()) < sequence)
         {
@@ -43,7 +42,6 @@ public final class BlockingWaitStrategy implements WaitStrategy
                 lock.unlock();
             }
         }
-
         if (0 != dependents.length)
         {
             while ((availableSequence = getMinimumSequence(dependents)) < sequence)
@@ -51,7 +49,6 @@ public final class BlockingWaitStrategy implements WaitStrategy
                 barrier.checkAlert();
             }
         }
-
         return availableSequence;
     }
 
