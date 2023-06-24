@@ -30,7 +30,8 @@ public final class YieldingWaitStrategy implements WaitStrategy
     private static final int SPIN_TRIES = 100;
 
     @Override
-    public long waitFor(final long sequence, final Sequence cursor, final Sequence[] dependents, final SequenceBarrier barrier)
+    public long waitFor(final long sequence, final Sequence cursor,
+                        final Sequence[] dependents, final SequenceBarrier barrier)
         throws AlertException, InterruptedException
     {
         long availableSequence;
@@ -55,7 +56,8 @@ public final class YieldingWaitStrategy implements WaitStrategy
     }
 
     @Override
-    public long waitFor(final long sequence, final Sequence cursor, final Sequence[] dependents, final SequenceBarrier barrier,
+    public long waitFor(final long sequence, final Sequence cursor,
+                        final Sequence[] dependents, final SequenceBarrier barrier,
                         final long timeout, final TimeUnit sourceUnit)
         throws AlertException, InterruptedException
     {
