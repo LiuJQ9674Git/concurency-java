@@ -90,7 +90,8 @@ public final class SleepingWaitStrategy implements WaitStrategy
     {
     }
 
-    private int applyWaitMethod(final SequenceBarrier barrier, int counter)
+    private int applyWaitMethod(final SequenceBarrier barrier,
+                                int counter)
         throws AlertException
     {
         barrier.checkAlert();
