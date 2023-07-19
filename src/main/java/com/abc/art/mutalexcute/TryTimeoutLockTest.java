@@ -54,7 +54,6 @@ public class TryTimeoutLockTest {
             thread.start();
 
         }
-
     }
 
     public long getAndIncrement() {
@@ -75,10 +74,33 @@ public class TryTimeoutLockTest {
         return temp;
     }
 
+    public static void doCompositeFastPathLock(){
+        TryTimeoutLockTest counter=new TryTimeoutLockTest(new CompositeFastPathLock());
+        //int k=0;
+        for(int i=0;i<30;i++) {
+            Thread thread=new Thread(()->{
+                long c = counter.getAndIncrement();
+                try {
+                    int k= ThreadLocalRandom.current().nextInt(100);
+                    Thread.sleep(k);
+                    System.out.println("Thread\t"+Thread.currentThread().getName()+
+                            "\tsleep:\t"+k+"\tvalue:\t"+c);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+
+            }
+            );
+            thread.start();
+
+        }
+    }
+
     public static void main(String[] args){
         //doLockInt();
         //doTTASLock();
         //dogeTOLockTest();
-        doCompositeLock();
+        //doCompositeLock();
+        doCompositeFastPathLock();
     }
 }
