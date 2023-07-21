@@ -86,18 +86,18 @@ public class TOLock implements java.util.concurrent.locks.Lock{
 
         System.out.println("\t"+Thread.currentThread().getName()+
                 "\ttryLock while out 8 "+
-                "\n\t qnode:\t"+qnode+"\tmyPred:\t"+myPred);
+                "\n\t qnode:\t"+qnode+"\tmyPred:\t"+myPred+"\tqnode.pred:\t"+qnode.pred);
 
         if (!tail.compareAndSet(qnode, myPred)) {
             System.out.println("\t"+Thread.currentThread().getName()+
                     "\ttryLock !tail.compareAndSet(qnode, myPred) 9 "+
-                    "\n\t qnode:\t"+qnode+"\tmyPred:\t"+myPred);
+                    "\n\t qnode:\t"+qnode+"\tmyPred:\t"+myPred+"\tqnode.pred:\t"+qnode.pred);
             qnode.pred = myPred;
         }
 
         System.out.println("\t"+Thread.currentThread().getName()+
                 "\ttryLock while exter a "+
-                "\n\t qnode:\t"+qnode+"\tmyPred:\t"+myPred);
+                "\n\t qnode:\t"+qnode+"\tmyPred:\t"+myPred+"\tqnode.pred:\t"+qnode.pred);
 
         return false;
     }

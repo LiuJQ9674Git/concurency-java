@@ -1,0 +1,168 @@
+/Users/liujianqiang/Desktop/Tools/jdk-17.0.6.jdk/Contents/Home/bin/java -javaagent:/Applications/IntelliJ IDEA CE 2022.app/Contents/lib/idea_rt.jar=49709:/Applications/IntelliJ IDEA CE 2022.app/Contents/bin -Dfile.encoding=UTF-8 -classpath /Users/liujianqiang/Desktop/ABC-J2EE-DEV/Scala-DEV/concurency-java/out/production/concurency-java1 com.abc.art.mutalexcute.TryTimeoutLockTest
+Thread-6	tryLock enter 1
+	 qnode:	Thread-6|Try	myPred:	Thread-9|Try
+Thread-8	tryLock enter 1
+	 qnode:	Thread-8|Try	myPred:	Thread-2|Try
+Thread-1	tryLock enter 1
+	 qnode:	Thread-1|Try	myPred:	Thread-4|Try
+Thread-4	tryLock enter 1
+	 qnode:	Thread-4|Try	myPred:	Thread-3|Try
+Thread-7	tryLock enter 1
+	 qnode:	Thread-7|Try	myPred:	null
+Thread-9	tryLock enter 1
+	 qnode:	Thread-9|Try	myPred:	Thread-8|Try
+Thread-5	tryLock enter 1
+	 qnode:	Thread-5|Try	myPred:	Thread-0|Try
+Thread-0	tryLock enter 1
+	 qnode:	Thread-0|Try	myPred:	Thread-6|Try
+Thread-3	tryLock enter 1
+	 qnode:	Thread-3|Try	myPred:	Thread-7|Try
+Thread-2	tryLock enter 1
+	 qnode:	Thread-2|Try	myPred:	Thread-1|Try
+
+	Thread-6	tryLock while start 3
+	 qnode:	Thread-6|Try	myPred:	Thread-9|Try
+	Thread-8	tryLock while start 3
+	 qnode:	Thread-8|Try	myPred:	Thread-2|Try
+	Thread-1	tryLock while start 3
+	 qnode:	Thread-1|Try	myPred:	Thread-4|Try
+	Thread-4	tryLock while start 3
+	 qnode:	Thread-4|Try	myPred:	Thread-3|Try
+	Thread-7	tryLock myPred == null || myPred.pred == AVAILABLE 2
+	 qnode:	Thread-7|Try	myPred:	null
+	Thread-5	tryLock while start 3
+	 qnode:	Thread-5|Try	myPred:	Thread-0|Try
+	Thread-0	tryLock while start 3
+	 qnode:	Thread-0|Try	myPred:	Thread-6|Try
+	Thread-3	tryLock while start 3
+	 qnode:	Thread-3|Try	myPred:	Thread-7|Try
+	Thread-9	tryLock while start 3
+	 qnode:	Thread-9|Try	myPred:	Thread-8|Try
+	Thread-2	tryLock while start 3
+	 qnode:	Thread-2|Try	myPred:	Thread-1|Try
+
+	Thread-7	unlock  1
+	 qnode:	Thread-7|Try	qnode.pred	null
+	Thread-7	unlock  3
+	 qnode:	Thread-7|Try	qnode.pred	AVAILABLE
+	Thread-7	unlock 2
+	 qnode:	Thread-7|Try	qnode.pred	AVAILABLE
+	Thread-3	tryLock while predPred == AVAILABLE 5
+	 qnode:	Thread-3|Try	myPred:	Thread-7|Try	predPred:	AVAILABLE
+
+
+	Thread-3	unlock  1
+	 qnode:	Thread-3|Try	qnode.pred	null
+	Thread-3	unlock  3
+	 qnode:	Thread-3|Try	qnode.pred	AVAILABLE
+	Thread-4	tryLock while predPred == AVAILABLE 5
+	 qnode:	Thread-4|Try	myPred:	Thread-3|Try	predPred:	AVAILABLE
+	Thread-3	unlock 2
+	 qnode:	Thread-3|Try	qnode.pred	AVAILABLE
+
+	Thread-4	unlock  1
+	 qnode:	Thread-4|Try	qnode.pred	null
+	Thread-4	unlock  3
+	 qnode:	Thread-4|Try	qnode.pred	AVAILABLE
+	Thread-1	tryLock while predPred == AVAILABLE 5
+	 qnode:	Thread-1|Try	myPred:	Thread-4|Try	predPred:	AVAILABLE
+	Thread-4	unlock 2
+	 qnode:	Thread-4|Try	qnode.pred	AVAILABLE
+	Thread-0	tryLock while out 8
+	 qnode:	Thread-0|Try	myPred:	Thread-6|Try	qnode.pred:	null
+	Thread-0	tryLock !tail.compareAndSet(qnode, myPred) 9
+	 qnode:	Thread-0|Try	myPred:	Thread-6|Try	qnode.pred:	null
+	Thread-6	tryLock while out 8
+	 qnode:	Thread-6|Try	myPred:	Thread-9|Try	qnode.pred:	null
+	Thread-6	tryLock !tail.compareAndSet(qnode, myPred) 9
+	 qnode:	Thread-6|Try	myPred:	Thread-9|Try	qnode.pred:	null
+	Thread-5	tryLock while out 8
+	 qnode:	Thread-5|Try	myPred:	Thread-0|Try	qnode.pred:	null
+	Thread-5	tryLock while exter a
+	 qnode:	Thread-5|Try	myPred:	Thread-0|Try	qnode.pred:	null
+	Thread-0	tryLock while exter a
+	 qnode:	Thread-0|Try	myPred:	Thread-6|Try	qnode.pred:	Thread-6|Try
+	Thread-6	tryLock while exter a
+	 qnode:	Thread-6|Try	myPred:	Thread-9|Try	qnode.pred:	Thread-9|Try
+	Thread-2	tryLock while out 8
+	 qnode:	Thread-2|Try	myPred:	Thread-1|Try	qnode.pred:	null
+	Thread-2	tryLock !tail.compareAndSet(qnode, myPred) 9
+	 qnode:	Thread-2|Try	myPred:	Thread-1|Try	qnode.pred:	null
+	Thread-2	tryLock while exter a
+	 qnode:	Thread-2|Try	myPred:	Thread-1|Try	qnode.pred:	Thread-1|Try
+	Thread-8	tryLock while out 8
+	 qnode:	Thread-8|Try	myPred:	Thread-1|Try	qnode.pred:	null
+	Thread-8	tryLock !tail.compareAndSet(qnode, myPred) 9
+	 qnode:	Thread-8|Try	myPred:	Thread-1|Try	qnode.pred:	null
+	Thread-8	tryLock while exter a
+	 qnode:	Thread-8|Try	myPred:	Thread-1|Try	qnode.pred:	Thread-1|Try
+	Thread-9	tryLock while out 8
+	 qnode:	Thread-9|Try	myPred:	Thread-1|Try	qnode.pred:	null
+	Thread-9	tryLock !tail.compareAndSet(qnode, myPred) 9
+	 qnode:	Thread-9|Try	myPred:	Thread-1|Try	qnode.pred:	null
+	Thread-9	tryLock while exter a
+	 qnode:	Thread-9|Try	myPred:	Thread-1|Try	qnode.pred:	Thread-1|Try
+
+	Thread-8	tryLock while predPred != null 6
+	 qnode:	Thread-8|Try	 myPred:	Thread-2|Try	predPred:	Thread-1|Try
+	Thread-9	tryLock while predPred != null 6
+	 qnode:	Thread-9|Try	 myPred:	Thread-8|Try	predPred:	Thread-1|Try
+
+	Thread-1	unlock  1
+	 qnode:	Thread-1|Try	qnode.pred	null
+	Thread-1	unlock  3
+	 qnode:	Thread-1|Try	qnode.pred	AVAILABLE
+	Thread-1	unlock 2
+	 qnode:	Thread-1|Try	qnode.pred	AVAILABLE
+
+	Thread-9	unlock  1
+	 qnode:	Thread-9|Try	qnode.pred	Thread-1|Try
+	Thread-9	unlock  3
+	 qnode:	Thread-9|Try	qnode.pred	AVAILABLE
+	Thread-9	unlock 2
+	 qnode:	Thread-9|Try	qnode.pred	AVAILABLE
+
+	Thread-6	unlock  1
+	 qnode:	Thread-6|Try	qnode.pred	Thread-9|Try
+	Thread-6	unlock  3
+	 qnode:	Thread-6|Try	qnode.pred	AVAILABLE
+	Thread-6	unlock 2
+	 qnode:	Thread-6|Try	qnode.pred	AVAILABLE
+
+	Thread-0	unlock  1
+	 qnode:	Thread-0|Try	qnode.pred	Thread-6|Try
+	Thread-0	unlock  3
+	 qnode:	Thread-0|Try	qnode.pred	Thread-6|Try
+
+	Thread-8	unlock  1
+	 qnode:	Thread-8|Try	qnode.pred	Thread-1|Try
+	Thread-8	unlock  3
+	 qnode:	Thread-8|Try	qnode.pred	AVAILABLE
+	Thread-8	unlock 2
+	 qnode:	Thread-8|Try	qnode.pred	AVAILABLE
+
+	Thread-5	unlock  1
+	 qnode:	Thread-5|Try	qnode.pred	null
+	Thread-5	unlock  3
+	 qnode:	Thread-5|Try	qnode.pred	AVAILABLE
+	Thread-5	unlock 2
+	 qnode:	Thread-5|Try	qnode.pred	AVAILABLE
+
+	Thread-2	unlock  1
+	 qnode:	Thread-2|Try	qnode.pred	Thread-1|Try
+	Thread-2	unlock  3
+	 qnode:	Thread-2|Try	qnode.pred	AVAILABLE
+	Thread-2	unlock 2
+	 qnode:	Thread-2|Try	qnode.pred	AVAILABLE
+
+Thread	Thread-4	sleep:	1015	value:	2
+Thread	Thread-5	sleep:	3150	value:	0
+Thread	Thread-0	sleep:	4299	value:	0
+Thread	Thread-8	sleep:	4359	value:	0
+Thread	Thread-1	sleep:	6069	value:	3
+Thread	Thread-2	sleep:	5925	value:	0
+Thread	Thread-3	sleep:	8762	value:	1
+Thread	Thread-6	sleep:	8604	value:	0
+Thread	Thread-9	sleep:	9909	value:	0
+Thread	Thread-7	sleep:	78	    value:	0
+

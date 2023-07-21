@@ -99,8 +99,8 @@ public class TryTimeoutLockTest {
     public static void main(String[] args){
         //doLockInt();
         //doTTASLock();
-        //dogeTOLockTest();
+        dogeTOLockTest();
         //doCompositeLock();
-        doCompositeFastPathLock();
+        //doCompositeFastPathLock();
     }
 }
