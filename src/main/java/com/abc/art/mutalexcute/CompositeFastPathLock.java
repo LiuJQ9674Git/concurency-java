@@ -25,7 +25,7 @@ public class CompositeFastPathLock extends CompositeLock {
     public boolean tryLock(long time, TimeUnit unit)
             throws InterruptedException {
         if (fastPathLock()) {
-        return true;
+            return true;
         }
         if (super.tryLock(time, unit)) {
             while ((tail.getStamp() & FASTPATH ) != 0){
