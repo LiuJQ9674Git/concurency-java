@@ -1,9 +1,7 @@
 package com.abc.queue;
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.VarHandle;
-import java.util.*;
 import java.util.concurrent.ForkJoinPool;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.LockSupport;
 
 public class SynchronousQueue<E> {
@@ -140,14 +138,6 @@ public class SynchronousQueue<E> {
         void advanceTail(QNode t, QNode nt) {
             if (tail == t)
                 QTAIL.compareAndSet(this, t, nt);
-        }
-
-        /**
-         * Tries to CAS cleanMe slot.
-         */
-        boolean casCleanMe(QNode cmp, QNode val) {
-            return cleanMe == cmp &&
-                    QCLEANME.compareAndSet(this, cmp, val);
         }
 
         /**
