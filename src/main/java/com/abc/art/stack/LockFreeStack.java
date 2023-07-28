@@ -10,7 +10,7 @@ public class LockFreeStack <T>{
     static final int MIN_DELAY = Config.MIN_DELAY;
     static final int MAX_DELAY = Config.MAX_DELAY;
     Backoff backoff = new Backoff(MIN_DELAY, MAX_DELAY);
-    AtomicInteger atomicInteger=new AtomicInteger(0);
+    //AtomicInteger atomicInteger=new AtomicInteger(0);
     protected boolean tryPush(Node node){
         Node oldTop = top.get();
         node.next = oldTop;
@@ -20,7 +20,7 @@ public class LockFreeStack <T>{
         Node node = new Node(value);
         while (true) {
             if (tryPush(node)) {
-                atomicInteger.getAndIncrement();
+                //atomicInteger.getAndIncrement();
                 return;
             } else {
                 try {
@@ -39,7 +39,7 @@ public class LockFreeStack <T>{
         }
         Node newTop = oldTop.next;
         if (top.compareAndSet(oldTop, newTop)) {
-            atomicInteger.getAndDecrement();
+            //atomicInteger.getAndDecrement();
             return oldTop;
         } else {
             return null;
@@ -59,8 +59,8 @@ public class LockFreeStack <T>{
             }
         }
     }
-
-    public boolean empty(){
-        return atomicInteger.intValue()==0;
-    }
+//
+//    public boolean empty(){
+//        return atomicInteger.intValue()==0;
+//    }
 }

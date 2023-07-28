@@ -15,7 +15,7 @@ public class BitonicTest {
             final int ii=i;
             Thread thread = new Thread(() -> {
                 int pos=bitonic.traverse(ii);
-                System.out.println("Post:\t"+pos);
+                System.out.println("Post:\t"+pos+"\t i:\t"+ii);
             });
             thread.start();
         }

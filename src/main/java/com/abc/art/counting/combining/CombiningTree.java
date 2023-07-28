@@ -1,6 +1,7 @@
 package com.abc.art.counting.combining;
 
 import com.abc.art.mutalexcute.ThreadId;
+import com.abc.art.stack.EliminationBackoffStack;
 import com.abc.art.stack.LockFreeStack;
 
 public class CombiningTree {
@@ -18,7 +19,8 @@ public class CombiningTree {
     }
 
     public int getAndIncrement() {
-        LockFreeStack<Node> stack = new LockFreeStack<Node>();
+        //LockFreeStack<Node> stack = new LockFreeStack<Node>();
+        LockFreeStack<Node> stack = new EliminationBackoffStack();
         Node myLeaf = leaf[ThreadId.get()/2];
         Node node = myLeaf;
         // precombining phase
@@ -33,9 +35,15 @@ public class CombiningTree {
         // operation phase
         int prior = stop.op(combined);
         // distribution phase
-        while (!stack.empty()) {
-            node = stack.pop();
+//        while (!stack.empty()) {//修改为stack不为null的验证，去除原子加一操作
+//            node = stack.pop();
+//            node.distribute(prior);
+//        }
+        while ((node = stack.pop()) != null) {//修改为stack不为null的验证，去除原子加一操作
+            //node = stack.pop();
             node.distribute(prior);
         }
-        return prior; }
+
+        return prior;
+        }
 }
