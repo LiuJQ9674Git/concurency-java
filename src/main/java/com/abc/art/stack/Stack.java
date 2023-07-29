@@ -6,6 +6,9 @@ public class Stack<T>  {
     private AtomicInteger top;
     private T[] items;
 
+    public Stack(){
+        this(128);
+    }
     public Stack(int capacity) {
         top = new AtomicInteger();
         items = (T[]) new Object[capacity];
@@ -25,6 +28,11 @@ public class Stack<T>  {
             top.getAndIncrement(); // restore state
             throw new EmptyException();
         }
-        return items[i]; }
+        return items[i];
+    }
+
+    public boolean empty() {
+        return top.get() == 0;
+    }
 
 }
