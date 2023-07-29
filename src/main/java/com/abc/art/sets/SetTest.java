@@ -13,8 +13,8 @@ public class SetTest {
         //setTest.handleSynchronousDualQueue();
         //setTest.handleFineList();
         //setTest.handleOptimisticList();
-        //setTest.handleLazyList();
-        setTest.handleLockFreeList();
+        setTest.handleLazyList();
+        //setTest.handleLockFreeList();
     }
 
     void handleLockFreeList() {

@@ -5,7 +5,6 @@ import com.abc.art.ErrorDebug;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-@ErrorDebug
 public class OptimisticList<T> implements Set<T> {
 
     private final Node head;
@@ -24,7 +23,6 @@ public class OptimisticList<T> implements Set<T> {
             while (curr.key < key) {
                 pred = curr;
                 curr = curr.next;
-                pred.lock();
             }
             //乐观处理结束
             pred.lock();

@@ -21,7 +21,6 @@ public class LazyList<T> implements Set<T> {
             while (curr.key < key) {
                 pred = curr;
                 curr = curr.next;
-                pred.lock();
             }
             //乐观处理结束
             pred.lock();
