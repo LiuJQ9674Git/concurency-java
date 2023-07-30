@@ -1,21 +1,19 @@
-package com.abc.art.counting.network.bitonic;
+package com.abc.art.counting.network.diffracting;
+
+import com.abc.art.counting.network.diffracting.DiffractingTree;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class BitonicTest {
-   final Bitonic bitonic=new Bitonic(4);
-    AtomicInteger atomicInteger=new AtomicInteger(0);
+public class DiffractingTreeTest {
+    static int mySize=16;
+    static AtomicInteger atomicInteger = new AtomicInteger();;
     public static void main(String[] args){
-        BitonicTest bitonicTest=new BitonicTest();
-        bitonicTest.handleBitonic();
-    }
-
-    void handleBitonic(){
+        DiffractingTree diffractingTree=new DiffractingTree(mySize);
         for(int i=0;i<16;i++) {
             final int ii=i;
             Thread thread = new Thread(() -> {
                 while (true) {
-                    int pos = bitonic.traverse(2);
+                    int pos = diffractingTree.traverse();
                     System.out.println(Thread.currentThread().getName()+
                             "\t ith:\t" + ii+"\tPost:\t" + pos
                             +"\t atomicInteger\t "+atomicInteger.incrementAndGet() );

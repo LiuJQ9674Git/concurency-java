@@ -1,4 +1,4 @@
-package com.abc.art.counting.network.bitonic;
+package com.abc.art.counting.network;
 
 public class Balancer {
     boolean toggle = true;

@@ -1,4 +1,4 @@
-package com.abc.art.counting.network.periodic;
+package com.abc.art.counting.network.diffracting;
 
 import com.abc.art.mutalexcute.ThreadId;
 import com.abc.art.stack.EliminationArray;

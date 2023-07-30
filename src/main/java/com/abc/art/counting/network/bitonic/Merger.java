@@ -1,5 +1,7 @@
 package com.abc.art.counting.network.bitonic;
 
+import com.abc.art.counting.network.Balancer;
+
 public class Merger {
     Merger[] half; // two half-width merger networks
     Balancer[] layer; // final layer

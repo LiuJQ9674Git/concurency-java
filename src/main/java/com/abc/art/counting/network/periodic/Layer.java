@@ -1,6 +1,6 @@
 package com.abc.art.counting.network.periodic;
 
-import com.abc.art.counting.network.bitonic.Balancer;
+import com.abc.art.counting.network.Balancer;
 
 public class Layer {
     int width;

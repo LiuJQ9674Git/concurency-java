@@ -1,4 +1,4 @@
-package com.abc.art.counting.network.periodic;
+package com.abc.art.counting.network.diffracting;
 
 public class DiffractingTree {
     DiffractingBalancer root;

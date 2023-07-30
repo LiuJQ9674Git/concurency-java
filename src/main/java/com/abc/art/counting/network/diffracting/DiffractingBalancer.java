@@ -1,6 +1,6 @@
-package com.abc.art.counting.network.periodic;
+package com.abc.art.counting.network.diffracting;
 
-import com.abc.art.counting.network.bitonic.Balancer;
+import com.abc.art.counting.network.Balancer;
 
 import java.util.concurrent.TimeoutException;
 
