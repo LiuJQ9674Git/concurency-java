@@ -1,6 +1,7 @@
 package com.abc.art.stack;
 
 import java.util.concurrent.TimeoutException;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class EliminationBackoffStack<T> extends LockFreeStack<T> {
     static final int capacity = Config.capacity;
@@ -28,8 +29,10 @@ public class EliminationBackoffStack<T> extends LockFreeStack<T> {
         try {
             T otherValue = eliminationArray.visit(value, rangePolicy.getRange());
             if (otherValue == null) {
-                rangePolicy.recordEliminationSuccess("push");
+                rangePolicy.recordEliminationSuccessPush(this);
                 return;
+            }else {
+                rangePolicy.recordEliminationFailPush(this);
             }
         } catch (TimeoutException ex) {
             rangePolicy.recordEliminationTimeout();
@@ -40,15 +43,16 @@ public class EliminationBackoffStack<T> extends LockFreeStack<T> {
         try {
             T otherValue = eliminationArray.visit(null, rangePolicy.getRange());
             if (otherValue != null) {
-                rangePolicy.recordEliminationSuccess("pop");
+                rangePolicy.recordEliminationSuccessPop(this);
                 return otherValue;
-            }else {
-
+            }else{
+                rangePolicy.recordEliminationFailPop(this);
             }
         } catch (Exception ex) {
             rangePolicy.recordEliminationTimeout();
         }
-        return null;
+        //return null;//eliminatedPop();
+        return eliminatedPop();
     }
     public T pop() throws EmptyException {
         while (true) {
@@ -64,5 +68,10 @@ public class EliminationBackoffStack<T> extends LockFreeStack<T> {
                 return eliminatedPop();
             }
         }
+    }
+
+    public boolean empty() {
+        //return (super.empty() && (pushInteger.get()==0));
+        return super.empty() &&policy.get().empty();
     }
 }

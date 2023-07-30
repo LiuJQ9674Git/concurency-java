@@ -1,9 +1,7 @@
 package com.abc.art.counting.combining;
 
 public class Node {
-    enum CStatus {IDLE, FIRST, SECOND, RESULT, ROOT}
-
-    ;
+    enum CStatus {IDLE, FIRST, SECOND, RESULT, ROOT};
     boolean locked;
     CStatus cStatus;
     int firstValue, secondValue;

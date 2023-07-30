@@ -59,8 +59,8 @@ public class LockFreeStack <T>{
             }
         }
     }
-//
-//    public boolean empty(){
-//        return atomicInteger.intValue()==0;
-//    }
+
+    public boolean empty(){
+        return  top.get()==null;
+    }
 }

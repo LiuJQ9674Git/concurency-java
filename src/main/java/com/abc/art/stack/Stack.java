@@ -3,11 +3,12 @@ package com.abc.art.stack;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Stack<T>  {
+    static int DEFEAULT_CAPACITY=128;
     private AtomicInteger top;
     private T[] items;
 
     public Stack(){
-        this(128);
+        this(DEFEAULT_CAPACITY);
     }
     public Stack(int capacity) {
         top = new AtomicInteger();
