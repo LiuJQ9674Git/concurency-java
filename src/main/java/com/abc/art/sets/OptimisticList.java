@@ -125,7 +125,7 @@ public class OptimisticList<T> implements Set<T> {
         private Lock lock = new ReentrantLock();
         T item;
         int key;
-        Node next;
+        volatile Node next;
 
         Node(int key) {
             this.key = key;

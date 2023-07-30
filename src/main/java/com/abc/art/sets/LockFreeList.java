@@ -5,13 +5,13 @@ import com.abc.art.stack.Node;
 
 import java.util.concurrent.atomic.AtomicMarkableReference;
 
-@ErrorDebug
 public class LockFreeList<T> implements Set<T> {
     private final Node head;
 
     LockFreeList() {
         head = new Node(Integer.MIN_VALUE);
-        //head.next = new Node(Integer.MAX_VALUE);
+        Node next = new Node(Integer.MAX_VALUE);
+        head.next = new AtomicMarkableReference(next,false);
     }
 
     public boolean add(T item) {

@@ -54,6 +54,7 @@ public class LazyList<T> implements Set<T> {
             Node curr = head.next;
             while (curr.key < key) {
                 pred = curr;
+                //curr.next 在无锁情况下变量
                 curr = curr.next;
             }
             pred.lock();
@@ -64,6 +65,7 @@ public class LazyList<T> implements Set<T> {
                     if (validate(pred, curr)) {
                         if (curr.key == key) {
                             curr.marked = true;
+                            //curr.next 在无锁情况下变量
                             pred.next = curr.next;
                             return true;
                         } else {
@@ -91,15 +93,18 @@ public class LazyList<T> implements Set<T> {
     }
 
     private boolean validate(Node pred, Node curr) {
+
         return !pred.marked && !curr.marked && pred.next == curr;
     }
 
     class Node<T> {
         private Lock lock = new ReentrantLock();
-        boolean marked;
+
+        //并发情况下非独占访问
+        volatile boolean marked;
         T item;
         int key;
-        Node next;
+        volatile Node next;
 
         Node(int key) {
             this.key = key;
