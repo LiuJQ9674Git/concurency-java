@@ -1,0 +1,54 @@
+token:	3	Thread-2	pos:	2
+token:	3	Thread-2	pos:	4
+token:	3	Thread-2	pos:	0
+token:	3	Thread-2	pos:	6
+token:	3	Thread-2	pos:	1
+token:	3	Thread-2	pos:	5
+
+token:	1	Thread-0	pos:	0
+token:	1	Thread-0	pos:	3
+token:	1	Thread-0	pos:	5
+token:	1	Thread-0	pos:	7
+token:	1	Thread-0	pos:	3
+token:	1	Thread-0	pos:	6
+token:	1	Thread-0	pos:	0
+
+token:	2	Thread-1	pos:	1
+token:	2	Thread-1	pos:	4
+token:	2	Thread-1	pos:	2
+
+
+
+
+token:	2	Thread-1	pos:	7
+token:	1	Thread-0	pos:	4
+token:	3	Thread-2	pos:	2
+token:	1	Thread-0	pos:	0
+token:	2	Thread-1	pos:	1
+token:	1	Thread-0	pos:	5
+token:	3	Thread-2	pos:	6
+token:	1	Thread-0	pos:	3
+token:	2	Thread-1	pos:	4
+token:	1	Thread-0	pos:	7
+token:	3	Thread-2	pos:	1
+token:	1	Thread-0	pos:	3
+token:	2	Thread-1	pos:	2
+token:	1	Thread-0	pos:	6
+token:	3	Thread-2	pos:	5
+token:	1	Thread-0	pos:	0
+token:	2	Thread-1	pos:	7
+token:	1	Thread-0	pos:	4
+token:	3	Thread-2	pos:	2
+token:	2	Thread-1	pos:	1
+token:	3	Thread-2	pos:	6
+token:	2	Thread-1	pos:	5
+token:	3	Thread-2	pos:	0
+token:	2	Thread-1	pos:	3
+token:	3	Thread-2	pos:	4
+token:	2	Thread-1	pos:	7
+token:	3	Thread-2	pos:	2
+token:	2	Thread-1	pos:	1
+token:	3	Thread-2	pos:	6
+token:	2	Thread-1	pos:	5
+token:	2	Thread-1	pos:	3
+token:	2	Thread-1	pos:	7

@@ -1,41 +1,96 @@
 package com.abc.art.counting.network.bitonic;
 
-import com.abc.art.counting.combining.CombiningTree;
-
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class BitonicTest {
-   final Bitonic bitonic=new Bitonic(4);
-    final AtomicInteger atomicInteger=new AtomicInteger(0);
-    final AtomicInteger atomicadd=new AtomicInteger(0);
-    final CombiningTree combiningTree=new CombiningTree(4);
+    static int WITH=4;
+    static int FIRST=0;
+    static int SECOND=WITH/2+1;
+
+   final Bitonic bitonic=new Bitonic(WITH);
+   AtomicInteger addTh=new AtomicInteger(1);
     public static void main(String[] args){
         BitonicTest bitonicTest=new BitonicTest();
         bitonicTest.handleBitonic();
     }
 
+
     void handleBitonic(){
-        for(int i=0;i<8;i++) {
-            final int ii=i;
+        handleToken_1();
+        handleToken_2();
+        //handleToken_3();
+        //handleToken_4();
+    }
+
+    void handleToken_1(){
+        Thread thread = new Thread(() -> {
+            while (true) {
+                int pos = bitonic.traverse(FIRST);
+                if(pos==0){
+                    continue;
+                }
+                System.out.println(Thread.currentThread().getName()
+                        +"\tPost:\t" + pos+"\taddTh:\t"+addTh.getAndAdd(pos)
+                        );
+
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+
+            }
+        },"handleToken_1");
+        thread.start();
+    }
+
+    void handleToken_2(){
             Thread thread = new Thread(() -> {
                 while (true) {
-                    int pos = bitonic.traverse(ii)+1;
-
-                    System.out.println(Thread.currentThread().getName()+
-                            "\t ith:\t" + ii+"\tPost:\t" + pos
-                            +"\t incrementAndGet:\t "+atomicInteger.incrementAndGet()
-                            +"\t getAndAdd:\t "+atomicadd.getAndAdd(pos)
-                            //+"\t combiningTree:\t"+combiningTree.getAndIncrement()
+                    int pos = bitonic.traverse(SECOND);
+                    if(pos==0){
+                        continue;
+                    }
+                    System.out.println(Thread.currentThread().getName()
+                            +"\tPost:\t" + pos+"\taddTh:\t"+addTh.getAndAdd(pos)
                     );
-
-//                    try {
-//                        Thread.sleep(100);
-//                    } catch (InterruptedException e) {
-//                        throw new RuntimeException(e);
-//                    }
+                    try {
+                        Thread.sleep(200);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
-            });
+            },"handleToken_2");
             thread.start();
-        }
+    }
+    void handleToken_3(){
+        Thread thread = new Thread(() -> {
+            while (true) {
+                int pos = bitonic.traverse(1);
+
+                System.out.println(Thread.currentThread().getName()+"\tPost:\t" + pos);
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        },"handleToken_3");
+        thread.start();
+    }
+
+    void handleToken_4(){
+        Thread thread = new Thread(() -> {
+            while (true) {
+                int pos = bitonic.traverse(2);
+                System.out.println(Thread.currentThread().getName()+"\tPost:\t" + pos);
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        },"handleToken_4");
+        thread.start();
     }
 }

@@ -3,8 +3,8 @@ package com.abc.art.counting.network.bitonic;
 import com.abc.art.counting.network.Balancer;
 
 public class Merger {
-    Merger[] half; // two half-width merger networks
-    Balancer[] layer; // final layer
+    final Merger[] half; // two half-width merger networks
+    final Balancer[] layer; // final layer
     final int width;
     public Merger(int myWidth) {
         width = myWidth;
@@ -15,6 +15,8 @@ public class Merger {
         if (width > 2) {
             half = new Merger[]{new Merger(width/2),
                     new Merger(width/2)};
+        }else {
+            half=null;
         }
     }
     public int traverse(int input) {
