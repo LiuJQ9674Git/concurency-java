@@ -28,28 +28,30 @@ public class EliminationBackoffStack<T> extends LockFreeStack<T> {
         RangePolicy rangePolicy = policy.get();
         try {
             T otherValue = eliminationArray.visit(value, rangePolicy.getRange());
+            //rangePolicy.recordEliminationSuccessPushing(this);
             if (otherValue == null) {
                 rangePolicy.recordEliminationSuccessPush(this);
-                return;
+                return; //wait for pop
             }else {
-                rangePolicy.recordEliminationFailPush(this);
+                rangePolicy.recordEliminationWaiting(this);
             }
         } catch (TimeoutException ex) {
-            rangePolicy.recordEliminationTimeout();
+            rangePolicy.recordEliminationTimeoutPush(this);
         }
     }
     public T eliminatedPop(){
         RangePolicy rangePolicy = policy.get();
         try {
             T otherValue = eliminationArray.visit(null, rangePolicy.getRange());
+            //rangePolicy.recordEliminationPoping(this);
             if (otherValue != null) {
                 rangePolicy.recordEliminationSuccessPop(this);
                 return otherValue;
             }else{
-                rangePolicy.recordEliminationFailPop(this);
+                rangePolicy.recordEliminationPopNull(this);
             }
         } catch (Exception ex) {
-            rangePolicy.recordEliminationTimeout();
+            rangePolicy.recordEliminationTimeoutPop(this);
         }
         //return null;//eliminatedPop();
         return eliminatedPop();

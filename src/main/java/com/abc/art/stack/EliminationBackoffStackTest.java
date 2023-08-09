@@ -9,24 +9,57 @@ public class EliminationBackoffStackTest {
     public static void main(String[] args){
         EliminationBackoffStackTest eliminationBackoffStackTest=new EliminationBackoffStackTest();
         eliminationBackoffStackTest.doElimination();
+        //eliminationBackoffStackTest.doEliminationPush();
+        //eliminationBackoffStackTest.doEliminationPop();
     }
 
-    public void doEliminationSigle()  {
-        Thread product = new Thread(() -> {
-            int pos = atomicInteger.getAndIncrement();
-            lockFreeStack.eliminatedPush(pos);
-            System.out.println(Thread.currentThread().getName() + "\tproductInteger:\t" + pos);
-        });
-        product.start();
-
-        Thread consume = new Thread(() -> {
-            Integer posEliminated = lockFreeStack.eliminatedPop();
-            System.out.println(Thread.currentThread().getName() + "\tconsumeInteger:\t" + posEliminated);
-        });
-        consume.start();
+    // ===========================================================================
+    public void doEliminationPop()  {
+        productEliminationPop();
     }
 
+    public void productEliminationPop(){
+        for(int i=0;i<NUM_THREAD;i++){
+            Thread thread = new Thread(() -> {
+                while (true) {
+                    Integer pos = lockFreeStack.eliminatedPop();
+                    System.out.println(Thread.currentThread().getName()
+                            + "\tconsumeInteger:\t" + pos);
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        System.out.println(e.getMessage());
+                        throw new RuntimeException(e);
+                    }
+                }
+            });
+            thread.start();
+        }
+    }
+    public void doEliminationPush()  {
+        productEliminationPush();
+    }
 
+    public void productEliminationPush(){
+        for(int i=0;i<NUM_THREAD;i++){
+            Thread thread = new Thread(() -> {
+                while (true) {
+                    int pos = atomicInteger.getAndIncrement();
+                    lockFreeStack.eliminatedPush(pos);
+                    System.out.println(Thread.currentThread().getName()
+                            + "\tproduct:\t" + pos);
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        System.out.println(e.getMessage());
+                        throw new RuntimeException(e);
+                    }
+                }
+            });
+            thread.start();
+        }
+    }
+    // =================================================================
     public void doElimination()  {
         productElimination();
         consumeElimination();
@@ -36,33 +69,47 @@ public class EliminationBackoffStackTest {
         for(int i=0;i<NUM_THREAD;i++){
             Thread thread = new Thread(() -> {
                 while (true) {
-//                    try {
-//                        Thread.sleep(20);
-//                    } catch (InterruptedException e) {
-//                        throw new RuntimeException(e);
-//                    }
                     int pos = atomicInteger.getAndIncrement();
                     lockFreeStack.eliminatedPush(pos);
-                    System.out.println(Thread.currentThread().getName() + "\tproductInteger:\t" + pos);
+                    System.out.println(Thread.currentThread().getName()
+                            + "\tproductInteger:\t" + pos);
                 }
             });
             thread.start();
         }
     }
+
+
     public void consumeElimination(){
         for(int i=0;i<NUM_THREAD;i++){
             Thread thread = new Thread(() -> {
                 while (true) {
-//                    try {
-//                        Thread.sleep(20);
-//                    } catch (InterruptedException e) {
-//                        throw new RuntimeException(e);
-//                    }
                     Integer pos = lockFreeStack.eliminatedPop();
-                    System.out.println(Thread.currentThread().getName() + "\tconsumeInteger:\t" + pos);
+                    //if(pos!=null)
+                    System.out.println(Thread.currentThread().getName()
+                            + "\tconsumeInteger:\t" + pos);
                 }
             });
             thread.start();
         }
     }
+
+    //===========================================================================
+    public void doEliminationSigle()  {
+        Thread product = new Thread(() -> {
+            int pos = atomicInteger.getAndIncrement();
+            lockFreeStack.eliminatedPush(pos);
+            System.out.println(Thread.currentThread().getName()
+                    + "\tproductInteger:\t" + pos);
+        });
+        product.start();
+
+        Thread consume = new Thread(() -> {
+            Integer posEliminated = lockFreeStack.eliminatedPop();
+            System.out.println(Thread.currentThread().getName() +
+                    "\tconsumeInteger:\t" + posEliminated);
+        });
+        consume.start();
+    }
+
 }

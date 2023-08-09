@@ -8,51 +8,67 @@ public class RangePolicy {
     Backoff backoff = new Backoff(LockFreeStack.MIN_DELAY,
             LockFreeStack.MAX_DELAY);
 
-    AtomicInteger atomicInteger=new AtomicInteger(0);
-    AtomicInteger pushInteger=new AtomicInteger(0);
-    AtomicInteger popInteger=new AtomicInteger(0);
+    static AtomicInteger atomicInteger=new AtomicInteger(0);
+    static AtomicInteger pushInteger=new AtomicInteger(0);
+    static AtomicInteger popInteger=new AtomicInteger(0);
+
     public int getRange() {
         return Config.range;
     }
 
     public void recordEliminationSuccessPush(EliminationBackoffStack stack) {
-        //先加一
-        atomicInteger.getAndIncrement();
-        pushInteger.incrementAndGet();
+        //pop取出调用
         //调整策略
-        //System.err.println(Thread.currentThread().getName()+"\tstep: push");
     }
+
+    public void recordEliminationWaiting(EliminationBackoffStack stack) {
+        //调整策略
+//        boolean isFull=isFull();
+//        while (isFull){
+//            try {
+//                backoff.backoff();
+//            } catch (InterruptedException e) {
+//                throw new RuntimeException(e);
+//            }
+//            //等待，通知机制
+//        }
+//        atomicInteger.getAndIncrement();
+//        pushInteger.getAndIncrement();
+    }
+
 
     public void recordEliminationSuccessPop(EliminationBackoffStack stack) {
-        //减一
+    }
+
+    public void recordEliminationPoping(EliminationBackoffStack stack) {
+        //调整策略
+        boolean isEmpty=atomicInteger.get()==0;
         atomicInteger.getAndDecrement();
-        popInteger.incrementAndGet();
-        //调整策略
-        //System.err.println(Thread.currentThread().getName()+"\tstep:pop");
+        popInteger.getAndIncrement();
+
     }
 
-    public void recordEliminationFailPush(EliminationBackoffStack stack) {
+    public void recordEliminationPopNull(EliminationBackoffStack stack) {
         //调整策略
-        //System.err.println(Thread.currentThread().getName()+"\tstep: fail push");
     }
 
-    public void recordEliminationFailPop(EliminationBackoffStack stack) {
-        //调整策略
-        //System.err.println(Thread.currentThread().getName()+"\tstep:fail pop");
+    public void recordEliminationTimeoutPush(EliminationBackoffStack stack) {
+        throw new RuntimeException();
+
+    }
+
+    public void recordEliminationTimeoutPop(EliminationBackoffStack stack) {
+        //System.err.println(Thread.currentThread().getName()+"\tstep: fail pop Timeout");
+        throw new RuntimeException();
     }
 
     public boolean empty() {
-        //return top.get() == 0;
-        return pushInteger.get()==0 || popInteger.get()==pushInteger.get();
+        return atomicInteger.get()==0 || popInteger.get()==pushInteger.get();
     }
 
-    public void recordEliminationTimeout() {
-//        try {
-//            backoff.backoff();
-//        } catch (InterruptedException e) {
-//            throw new RuntimeException(e);
-//        }
-        throw new RuntimeException();
-
+    boolean isFull(){
+        return pushInteger.get()-2 - Config.capacity ==0
+//                || popInteger.get()==pushInteger.get()
+                ;
     }
 }

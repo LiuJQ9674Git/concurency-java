@@ -20,7 +20,6 @@ public class LockFreeStack <T>{
         Node node = new Node(value);
         while (true) {
             if (tryPush(node)) {
-                //atomicInteger.getAndIncrement();
                 return;
             } else {
                 try {

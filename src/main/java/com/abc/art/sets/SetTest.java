@@ -14,7 +14,34 @@ public class SetTest {
         //setTest.handleFineList();
         //setTest.handleOptimisticList();
         //setTest.handleLazyList();
-        setTest.handleLockFreeList();
+        //setTest.handleLockFreeList();
+        //setTest.handleBucketList();
+        setTest.handleLockFreeHashSet();
+    }
+
+    public void handleLockFreeHashSet(){
+        LockFreeHashSet queue=new LockFreeHashSet(2);
+//        productLockFreeList(queue);
+//        consumeLockFreeList(queue);
+        queue.add(1);
+        queue.add(2);
+        queue.add(3);
+        queue.add(3);
+
+    }
+
+    public void handleBucketList(){
+        final Set queue=new BucketList();
+//        productLockFreeList(queue);
+//        consumeLockFreeList(queue);
+        queue.add(1);
+        queue.add(2);
+        queue.add(3);
+        boolean sec=queue.contains(2);
+        queue.remove(1);
+        boolean f=queue.contains(1);
+        queue.contains(1);
+
     }
 
     void handleLockFreeList() {
