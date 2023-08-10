@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class PhasedCuckooHashSet<T> {
+    static final int MASK = 0x00FFFFFF;
     volatile int capacity;
     volatile List<T>[][] table;
-    static int PROBE_SIZE = 125;
-    static int THRESHOLD = 256;
+    static int PROBE_SIZE = 4;
+    static int THRESHOLD = 2;
 
     static int LIMIT = 512;
 
@@ -129,9 +130,14 @@ public abstract class PhasedCuckooHashSet<T> {
         return false;
     }
 
-    abstract int hash0(T x);
 
-    abstract int hash1(T x);
+     int hash0(T x){
+         return x.hashCode();
+    }
+
+     int hash1(T x){
+        return x.hashCode() & MASK;
+     }
 
     public abstract void acquire(T x);
 
