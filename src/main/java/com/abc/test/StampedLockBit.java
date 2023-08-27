@@ -42,7 +42,139 @@ public class StampedLockBit {
     static final int CANCELLED = 0x80000000; // must be negative
 
     public static void main(String[] args){
-        writeLock();
+        forkinit();
+        //alg();
+        //writeLock();
+    }
+
+    public static void forkinit(){
+        int p = 16;
+
+        //int size = 1 << (33 - Integer.numberOfLeadingZeros(p - 1));
+        int corep = Math.min(Math.max(16, p), MAX_CAP);
+        //int maxSpares = Math.min(maximumPoolSize, MAX_CAP) - p;
+       // int minAvail = Math.min(Math.max(minimumRunnable, 0), MAX_CAP);
+       // this.bounds = ((minAvail - p) & SMASK) | (maxSpares << SWIDTH);
+        //this.mode = p | (asyncMode ? FIFO : 0);
+
+        //TC_SHIFT   = 32;
+        //TC_MASK:	281470681743360	Bit->:    1111 1111 1111 1111 0000 0000 0000 0000 0000 0000 0000 0000
+        long tcp=(((long)(-corep) << TC_SHIFT) & TC_MASK); //-16
+        //RC_SHIFT   = 48;
+        //                 1111 1111 1111 1111 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000
+
+        long rcp=(((long)(-p)<< RC_SHIFT) & RC_MASK);
+
+        long ctl = ((((long)(-corep) << TC_SHIFT) & TC_MASK) |
+                (((long)(-p)     << RC_SHIFT) & RC_MASK));
+
+        long pp=-16; //long 16*4
+        //111 1111 1111 1111 11111 1111 1111 1111 1111 1111 1111 1111 1111 1111 1111 0000
+        //                                                                         1 0000
+        System.out.println("pp:\t"+pp+"\tBit->:"
+                +Long.toBinaryString(pp));
+
+        System.out.println("p:\t"+p+"\tBit->:"
+                +Long.toBinaryString(p));
+
+        System.out.println("corep:\t"+corep);
+        System.out.println("p:\t"+p);
+
+        System.out.println("tcp:\t"+tcp+"\tBit->:"
+                +Long.toBinaryString(tcp));
+        System.out.println("rcp:\t"+rcp+"\tBit->:"
+                +Long.toBinaryString(rcp));
+        System.out.println("ctl:\t"+ctl+"\tBit->:"
+                +Long.toBinaryString(ctl));
+    }
+    static final int SMASK        = 0xffff;        // short bits == max index
+    static final int MAX_CAP      = 0x7fff;        // max #workers - 1
+
+    static final int UNSIGNALLED  = 1 << 31;       // must be negative
+    static final int SS_SEQ       = 1 << 16;       // version count
+
+    static final int FIFO         = 1 << 16;       // fifo queue or access mode
+    static final int SRC          = 1 << 17;
+
+    private static final long SP_MASK    = 0xffffffffL;
+    private static final long UC_MASK    = ~SP_MASK;
+
+    private static final int  RC_SHIFT   = 48;
+    private static final long RC_UNIT    = 0x0001L << RC_SHIFT;
+    private static final long RC_MASK    = 0xffffL << RC_SHIFT;
+
+    private static final int  TC_SHIFT   = 32;
+    private static final long TC_UNIT    = 0x0001L << TC_SHIFT;
+    private static final long TC_MASK    = 0xffffL << TC_SHIFT;
+    private static final long ADD_WORKER = 0x0001L << (TC_SHIFT + 15); // sign
+    private static final long NS_MASK=0xffffffffL;//nsteals
+    private static final long SAN=0x61c88647;
+
+
+
+    static void alg(){
+        // 110 0001 1100 1000 1000 0110 0100 0111
+        // 1640531527
+        System.out.println("SAN:\t"+SAN+"\tBit->:"
+                +Long.toBinaryString(SAN));
+
+        System.out.println("NS_MASK:\t"+NS_MASK+"\tBit->:"
+                +Long.toBinaryString(NS_MASK));
+
+        //TC_UNIT:	4294967296	Bit->:                          1 0000 0000 0000 0000 0000 0000 0000 0000
+        //TC_MASK:	281470681743360	Bit->:    1111 1111 1111 1111 0000 0000 0000 0000 0000 0000 0000 0000
+        //ADD_WORKER:	140737488355328	Bit->:1000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000
+        System.out.println("TC_UNIT:\t"+TC_UNIT+"\tBit->:"
+                +Long.toBinaryString(TC_UNIT));
+        System.out.println("TC_MASK:\t"+TC_MASK+"\tBit->:"
+                +Long.toBinaryString(TC_MASK));
+        System.out.println("ADD_WORKER:\t"+ADD_WORKER+"\tBit->:"
+                +Long.toBinaryString(ADD_WORKER));
+
+        //ForkJoinPool
+        //SP_MASK/UC_MASK 0XFFFFFFFFL / UC_MASK= ~SP_MASK;
+        //                                 1111 1111 1111 1111 1111 1111 1111 1111
+        //11111111111111111111111111111111 0000 0000 0000 0000 0000 0000 0000 0000
+
+        //RC 48 RC_UNIT= 0x0001L << RC_SHIFT; / RC_MASK= 0xffffL << RC_SHIFT;
+        //                  1 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000
+        //1111 1111 1111 1111 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000
+
+        //TC 32 TC_UNIT= 0x0001L << TC_SHIFT; / TC_MASK= 0xffffL << TC_SHIFT;
+        //                                      1 0000 0000 0000 0000 0000 0000 0000 0000
+        //                    1111 1111 1111 1111 0000 0000 0000 0000 0000 0000 0000 0000
+        //ADD_WORKER 47 ADD_WORKER = 0x0001L << (TC_SHIFT + 15);
+        //                    1000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000
+
+        System.out.println("RC_UNIT:\t"+RC_UNIT+"\tBit->:"
+                +Long.toBinaryString(RC_UNIT));
+        System.out.println("RC_MASK:\t"+RC_MASK+"\tBit->:"
+                +Long.toBinaryString(RC_MASK));
+
+        //1111 1111 1111 1111 1111 1111 1111 1111
+        System.out.println("SP_MASK:\t"+SP_MASK+"\tBit->:"
+                +Long.toBinaryString(SP_MASK));
+        System.out.println("UC_MASK:\t"+UC_MASK+"\tBit->:"
+                +Long.toBinaryString(UC_MASK));
+
+        //////////////////////
+        System.out.println("UNSIGNALLED:\t"+UNSIGNALLED+"\tBit->:"
+                +Integer.toBinaryString(UNSIGNALLED));
+
+        //  1111  1111  1111  1111
+        //   111  1111  1111  1111
+        System.out.println("SMASK:\t"+SMASK+"\tBit->:"
+                +Integer.toBinaryString(SMASK));
+        System.out.println("MAX_CAP:\t"+MAX_CAP+"\tBit->:"
+                +Integer.toBinaryString(MAX_CAP));
+        System.out.println("SS_SEQ:\t"+SS_SEQ+"\tBit->:"
+                +Integer.toBinaryString(SS_SEQ));
+        System.out.println("FIFO:\t"+FIFO+"\tBit->:"
+                +Integer.toBinaryString(FIFO));
+        System.out.println("SRC:\t"+SRC+"\tBit->:"
+                +Integer.toBinaryString(SRC));
+
+
     }
     static void writeLock(){
         long state=640;
