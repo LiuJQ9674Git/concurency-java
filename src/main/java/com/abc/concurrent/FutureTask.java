@@ -6,30 +6,7 @@ import java.util.concurrent.*;
 import java.util.concurrent.locks.LockSupport;
 
 public class FutureTask<V> implements RunnableFuture<V> {
-    /**
-     * Sync control in the current design relies
-     * on a "state" field updated via CAS to track completion, along
-     * with a simple Treiber stack to hold waiting threads.
-     */
 
-    /**
-     * The run state of this task, initially NEW.  The run state
-     * transitions to a terminal state only in methods set,
-     * setException, and cancel.
-     *
-     * During completion, state may take on
-     * transient values of COMPLETING (while outcome is being set) or
-     * INTERRUPTING (only while interrupting the runner to satisfy a
-     * cancel(true)). Transitions from these intermediate to final
-     * states use cheaper ordered/lazy writes because values are unique
-     * and cannot be further modified.
-     *
-     * Possible state transitions:
-     * NEW -> COMPLETING -> NORMAL
-     * NEW -> COMPLETING -> EXCEPTIONAL
-     * NEW -> CANCELLED
-     * NEW -> INTERRUPTING -> INTERRUPTED
-     */
     private volatile int state;
     private static final int NEW          = 0;
     private static final int COMPLETING   = 1;
@@ -156,15 +133,6 @@ public class FutureTask<V> implements RunnableFuture<V> {
      */
     protected void done() { }
 
-    /**
-     * Sets the result of this future to the given value unless
-     * this future has already been set or has been cancelled.
-     *
-     * <p>This method is invoked internally by the {@link #run} method
-     * upon successful completion of the computation.
-     * run 调用
-     * @param v the value
-     */
     protected void set(V v) {
         if (STATE.compareAndSet(this, NEW, COMPLETING)) {
             outcome = v;
@@ -173,18 +141,6 @@ public class FutureTask<V> implements RunnableFuture<V> {
         }
     }
 
-    /**
-     * Causes this future to report an {@link ExecutionException}
-     * with the given throwable as its cause, unless this future has
-     * already been set or has been cancelled.
-     *
-     * <p>This method is invoked internally by the {@link #run} method
-     * upon failure of the computation.
-     *
-     * run 调用
-     *
-     * @param t the cause of failure
-     */
     protected void setException(Throwable t) {
         if (STATE.compareAndSet(this, NEW, COMPLETING)) {
             outcome = t;
@@ -193,10 +149,6 @@ public class FutureTask<V> implements RunnableFuture<V> {
         }
     }
 
-    /**
-     * Ensures that any interrupt from a possible cancel(true) is only
-     * delivered to a task while in run or runAndReset.
-     */
     private void handlePossibleCancellationInterrupt(int s) {
         // It is possible for our interrupter to stall before getting a
         // chance to interrupt us.  Let's spin-wait patiently.
@@ -207,21 +159,12 @@ public class FutureTask<V> implements RunnableFuture<V> {
         }
     }
 
-    /**
-     * Simple linked list nodes to record waiting threads in a Treiber
-     * stack.  See other classes such as Phaser and SynchronousQueue
-     * for more detailed explanation.
-     */
     static final class WaitNode {
         volatile Thread thread;
         volatile WaitNode next;
         WaitNode() { thread = Thread.currentThread(); }
     }
 
-    /**
-     * Removes and signals all waiting threads, invokes done(), and
-     * nulls out callable.
-     */
     private void finishCompletion() {
         // assert state > COMPLETING;
         for (WaitNode q; (q = waiters) != null;) {
@@ -247,19 +190,7 @@ public class FutureTask<V> implements RunnableFuture<V> {
 
         callable = null;        // to reduce footprint
     }
-
-    /**
-     * Tries to unlink a timed-out or interrupted wait node to avoid
-     * accumulating garbage.  Internal nodes are simply unspliced
-     * without CAS since it is harmless if they are traversed anyway
-     * by releasers.  To avoid effects of unsplicing from already
-     * removed nodes, the list is retraversed in case of an apparent
-     * race.  This is slow when there are a lot of nodes, but we don't
-     * expect lists to be long enough to outweigh higher-overhead
-     * schemes.
-     *
-     * awaitDone 调用
-     */
+    
     private void removeWaiter(WaitNode node) {
         if (node != null) {
             node.thread = null;
