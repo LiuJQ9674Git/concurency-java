@@ -10,7 +10,6 @@ public class SynchronousQueue<E> {
     abstract static class Transferer<E> {
 
         abstract E transfer(E e);
-        
     }
 
     /**
@@ -35,7 +34,6 @@ public class SynchronousQueue<E> {
 
         /** 
         * Node class for TransferQueue. 
-        *
         */
         static final class QNode implements ForkJoinPool.ManagedBlocker {
             
@@ -108,13 +106,11 @@ public class SynchronousQueue<E> {
             }
         }
 
-        /** 
-        * Head of queue 
+        /**Head of queue 
         */
         transient volatile QNode head;
         
-        /** 
-        * Tail of queue 
+        /** Tail of queue 
         **/
         transient volatile QNode tail;
 
