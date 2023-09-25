@@ -18,8 +18,7 @@ public class SynchronousQueue<E> {
      */
     static final long SPIN_FOR_TIMEOUT_THRESHOLD = 1023L;
 
-    /** 
-    * Dual Queue 
+    /** Dual Queue 
     */
     static final class TransferQueue<E> extends Transferer<E> {
         
@@ -67,8 +66,7 @@ public class SynchronousQueue<E> {
             }
 
 
-            /**
-            * thread Setter null
+            /** thread Setter null
             **/
             void forgetWaiter() {
                 QWAITER.setOpaque(this, null);
@@ -120,7 +118,7 @@ public class SynchronousQueue<E> {
             tail = h;
         }
 
-        /**
+        /** 
          * Tries to cas nh as new head; if successful, unlink
          * old head's next node to avoid garbage retention.
          */
@@ -130,7 +128,7 @@ public class SynchronousQueue<E> {
                 h.next = h; // forget old next
         }
 
-        /**
+        /** 
          * Tries to cas nt as new tail.
          */
         void advanceTail(QNode t, QNode nt) {
@@ -138,8 +136,7 @@ public class SynchronousQueue<E> {
                 QTAIL.compareAndSet(this, t, nt);
         }
 
-        /**
-         * Puts or takes an item.
+        /** Puts or takes an item.
          */
         @SuppressWarnings("unchecked")
         E transfer(E e) {
