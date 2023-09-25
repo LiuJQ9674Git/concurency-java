@@ -1,18 +1,20 @@
 package com.abc.concurrent;
-
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.VarHandle;
 import java.util.concurrent.*;
 import java.util.concurrent.locks.LockSupport;
 
 public class FutureTask<V> implements RunnableFuture<V> {
-
     /**
+     * Sync control in the current design relies
+     * on a "state" field updated via CAS to track completion, along
+     * with a simple Treiber stack to hold waiting threads.
      * Possible state transitions:
      * NEW -> COMPLETING -> NORMAL
      * NEW -> COMPLETING -> EXCEPTIONAL
      * NEW -> CANCELLED
      * NEW -> INTERRUPTING -> INTERRUPTED
+     *
      */
     private volatile int state;
     private static final int NEW          = 0;
@@ -60,9 +62,6 @@ public class FutureTask<V> implements RunnableFuture<V> {
         this.state = NEW;       // ensure visibility of callable
     }
 
-    /**
-     * @throws CancellationException {@inheritDoc}
-     */
     public V get() throws InterruptedException, ExecutionException {
         int s = state;
         if (s <= COMPLETING)
