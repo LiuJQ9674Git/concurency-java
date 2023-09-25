@@ -7,6 +7,21 @@ import java.util.concurrent.locks.LockSupport;
 
 public class FutureTask<V> implements RunnableFuture<V> {
 
+    /**
+     * The run state of this task, initially NEW.
+     * The run state transitions to a terminal state only in methods set,
+     * setException, and cancel.
+     * During completion, state may take on transient values of COMPLETING
+     * (while outcome is being set) or INTERRUPTING
+     * (only while interrupting the runner to satisfy a cancel(true)).
+     * Transitions from these intermediate to final states use cheaper ordered/lazy writes
+     * because values are unique and cannot be further modified.
+     * Possible state transitions:
+     * NEW -> COMPLETING -> NORMAL
+     * NEW -> COMPLETING -> EXCEPTIONAL
+     * NEW -> CANCELLED
+     * NEW -> INTERRUPTING -> INTERRUPTED
+     */
     private volatile int state;
     private static final int NEW          = 0;
     private static final int COMPLETING   = 1;
