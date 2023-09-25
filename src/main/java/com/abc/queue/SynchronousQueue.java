@@ -1,4 +1,5 @@
 package com.abc.queue;
+
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.VarHandle;
 import java.util.concurrent.ForkJoinPool;
@@ -32,6 +33,7 @@ public class SynchronousQueue<E> {
 
         /** Node class for TransferQueue. */
         static final class QNode implements ForkJoinPool.ManagedBlocker {
+            
             volatile QNode next;          // next node in queue
             volatile Object item;         // CAS'ed to or from null
             volatile Thread waiter;       // to control park/unpark
@@ -52,6 +54,8 @@ public class SynchronousQueue<E> {
                         QITEM.compareAndSet(this, cmp, val);
             }
 
+
+            
             /**
              * Returns true if this node is known to be off the queue
              * because its next pointer has been forgotten due to
