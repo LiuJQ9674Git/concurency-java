@@ -50,17 +50,6 @@ public class SynchronousQueue<E> {
             }
 
             /**
-             * Tries to cancel by CAS'ing ref to this as item.
-             */
-            boolean tryCancel(Object cmp) {
-                return QITEM.compareAndSet(this, cmp, this);
-            }
-
-            boolean isCancelled() {
-                return item == this;
-            }
-
-            /**
              * Returns true if this node is known to be off the queue
              * because its next pointer has been forgotten due to
              * an advanceHead operation.
@@ -109,12 +98,6 @@ public class SynchronousQueue<E> {
         transient volatile QNode head;
         /** Tail of queue */
         transient volatile QNode tail;
-        /**
-         * Reference to a cancelled node that might not yet have been
-         * unlinked from queue because it was the last inserted node
-         * when it was cancelled.
-         */
-        transient volatile QNode cleanMe;
 
         TransferQueue() {
             QNode h = new QNode(null, false); // initialize to dummy node.
@@ -213,15 +196,12 @@ public class SynchronousQueue<E> {
         // VarHandle mechanics
         private static final VarHandle QHEAD;
         private static final VarHandle QTAIL;
-        private static final VarHandle QCLEANME;
         static {
             try {
                 MethodHandles.Lookup l = MethodHandles.lookup();
                 QHEAD = l.findVarHandle(TransferQueue.class, "head",
                         QNode.class);
                 QTAIL = l.findVarHandle(TransferQueue.class, "tail",
-                        QNode.class);
-                QCLEANME = l.findVarHandle(TransferQueue.class, "cleanMe",
                         QNode.class);
             } catch (ReflectiveOperationException e) {
                 throw new ExceptionInInitializerError(e);

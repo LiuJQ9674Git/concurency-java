@@ -15,14 +15,12 @@ public class SynchronousQueueStack<E> {
          * @param e if non-null, the item to be handed to a consumer;
          *          if null, requests that transfer return an item
          *          offered by producer.
-         * @param timed if this operation should timeout
-         * @param nanos the timeout, in nanoseconds
          * @return if non-null, the item provided or received; if null,
          *         the operation failed due to timeout or interrupt --
          *         the caller can distinguish which of these occurred
          *         by checking Thread.interrupted.
          */
-        abstract E transfer(E e, boolean timed, long nanos);
+        abstract E transfer(E e);
     }
 
     /**
@@ -160,7 +158,7 @@ public class SynchronousQueueStack<E> {
          * Puts or takes an item.
          */
         @SuppressWarnings("unchecked")
-        E transfer(E e, boolean timed, long nanos) {
+        E transfer(E e) {
 
             SNode s = null; // constructed/reused as needed
             int mode = (e == null) ? REQUEST : DATA;
@@ -168,25 +166,12 @@ public class SynchronousQueueStack<E> {
             for (;;) {
                 SNode h = head;
                 if (h == null || h.mode == mode) {  // empty or same-mode
-                    if (timed && nanos <= 0L) {     // can't wait
-                        if (h != null && h.isCancelled())
-                            casHead(h, h.next);     // pop cancelled node
-                        else
-                            return null;
-                    } else if (casHead(h, s = snode(s, e, h, mode))) {
-                        long deadline = timed ? System.nanoTime() + nanos : 0L;
+                    if (casHead(h, s = snode(s, e, h, mode))) {
                         Thread w = Thread.currentThread();
                         int stat = -1; // -1: may yield, +1: park, else 0
                         SNode m;                    // await fulfill or cancel
                         while ((m = s.match) == null) {
-                            if ((timed &&
-                                    (nanos = deadline - System.nanoTime()) <= 0) ||
-                                    w.isInterrupted()) {
-                                if (s.tryCancel()) {
-                                    clean(s);       // wait cancelled
-                                    return null;
-                                }
-                            } else if ((m = s.match) != null) {
+                            if ((m = s.match) != null) {
                                 break;              // recheck
                             } else if (stat <= 0) {
                                 if (stat < 0 && h == null && head == s) {
@@ -196,8 +181,6 @@ public class SynchronousQueueStack<E> {
                                     stat = 1;
                                     s.waiter = w;   // enable signal
                                 }
-                            } else if (nanos > SPIN_FOR_TIMEOUT_THRESHOLD) {
-                                LockSupport.parkNanos(this, nanos);
                             }
                         } //while over
                         if (stat == 1)
@@ -241,43 +224,6 @@ public class SynchronousQueueStack<E> {
             }
         }
 
-        /**
-         * Unlinks s from the stack.
-         */
-        void clean(SNode s) {
-            s.item = null;   // forget item
-            s.forgetWaiter();
-
-            /*
-             * At worst we may need to traverse entire stack to unlink
-             * s. If there are multiple concurrent calls to clean, we
-             * might not see s if another thread has already removed
-             * it. But we can stop when we see any node known to
-             * follow s. We use s.next unless it too is cancelled, in
-             * which case we try the node one past. We don't check any
-             * further because we don't want to doubly traverse just to
-             * find sentinel.
-             */
-
-           SNode past = s.next;
-            if (past != null && past.isCancelled())
-                past = past.next;
-
-            // Absorb cancelled nodes at head
-            SNode p;
-            while ((p = head) != null && p != past && p.isCancelled())
-                casHead(p, p.next);
-
-            // Unsplice embedded nodes
-            while (p != null && p != past) {
-                SNode n = p.next;
-                if (n != null && n.isCancelled())
-                    p.casNext(n, n.next);
-                else
-                    p = n;
-            }
-        }
-
         // VarHandle mechanics
         private static final VarHandle SHEAD;
         static {
@@ -310,7 +256,7 @@ public class SynchronousQueueStack<E> {
      */
     public boolean offer(E e) {
         if (e == null) throw new NullPointerException();
-        return transferer.transfer(e, true, 0) != null;
+        return transferer.transfer(e) != null;
     }
 
 
@@ -322,7 +268,7 @@ public class SynchronousQueueStack<E> {
      *         element is available
      */
     public E poll() {
-        return transferer.transfer(null, true, 0);
+        return transferer.transfer(null);
     }
 
 
