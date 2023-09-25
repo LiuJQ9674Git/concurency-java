@@ -66,8 +66,8 @@ public class SynchronousQueue<E> {
             }
 
 
-            /** thread Setter null
-            **/
+            
+            /**thread Setter null */
             void forgetWaiter() {
                 QWAITER.setOpaque(this, null);
             }
