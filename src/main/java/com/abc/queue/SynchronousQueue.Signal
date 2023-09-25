@@ -1,0 +1,302 @@
+// SynchronousQueue
+
+
+ ///////////////生产线程////////////////////////////
+ // 153
+ /**
+ this = {SynchronousQueue$TransferQueue@723} 
+ head = {SynchronousQueue$TransferQueue$QNode@726} 
+  next = null
+  item = null
+  waiter = null
+  isData = false
+ tail = {SynchronousQueue$TransferQueue$QNode@726} 
+  next = null
+  item = null
+  waiter = null
+  isData = false
+e = {Integer@724} 0
+s = null
+isData = true
+t = {SynchronousQueue$TransferQueue$QNode@726} 
+ next = null
+ item = null
+ waiter = null
+ isData = false
+h = {SynchronousQueue$TransferQueue$QNode@726} 
+ next = null
+ item = null
+ waiter = null
+ isData = false
+head = {SynchronousQueue$TransferQueue$QNode@726} 
+ next = null
+ item = null
+ waiter = null
+ isData = false
+t.next = null
+tail = {SynchronousQueue$TransferQueue$QNode@726} 
+ next = null
+ item = null
+ waiter = null
+ isData = false
+t.isData = false
+ */
+ else if ((tn = t.next) != null)
+ 
+ // 155
+ /**
+ this = {SynchronousQueue$TransferQueue@723} 
+ head = {SynchronousQueue$TransferQueue$QNode@726} 
+  next = {SynchronousQueue$TransferQueue$QNode@727} 
+   next = null
+   item = {Integer@724} 0
+   waiter = null
+   isData = true
+  item = null
+  waiter = null
+  isData = false
+ tail = {SynchronousQueue$TransferQueue$QNode@726} 
+  next = {SynchronousQueue$TransferQueue$QNode@727} 
+   next = null
+   item = {Integer@724} 0
+   waiter = null
+   isData = true
+  item = null
+  waiter = null
+  isData = false
+e = {Integer@724} 0
+s = {SynchronousQueue$TransferQueue$QNode@727} 
+isData = true
+t = {SynchronousQueue$TransferQueue$QNode@726} 
+ next = {SynchronousQueue$TransferQueue$QNode@727} 
+ item = null
+ waiter = null
+ isData = false
+h = {SynchronousQueue$TransferQueue$QNode@726} 
+ next = {SynchronousQueue$TransferQueue$QNode@727} 
+ item = null
+ waiter = null
+ isData = false
+tn = null
+head = {SynchronousQueue$TransferQueue$QNode@726} 
+ next = {SynchronousQueue$TransferQueue$QNode@727} 
+ item = null
+ waiter = null
+ isData = false
+t.next = {SynchronousQueue$TransferQueue$QNode@727} 
+ next = null
+ item = {Integer@724} 0
+ waiter = null
+ isData = true
+tail = {SynchronousQueue$TransferQueue$QNode@726} 
+ next = {SynchronousQueue$TransferQueue$QNode@727} 
+  next = null
+  item = {Integer@724} 0
+  waiter = null
+  isData = true
+ item = null
+ waiter = null
+ isData = false
+t.isData = false
+ */
+else if (t.casNext(null, (s != null) ? s :
+     (s = new QNode(e, isData)))) 
+ 
+ 
+ // 157
+ /**
+ this = {SynchronousQueue$TransferQueue@723} 
+ head = {SynchronousQueue$TransferQueue$QNode@726} 
+  next = {SynchronousQueue$TransferQueue$QNode@727} 
+   next = null
+   item = {Integer@724} 0
+   waiter = null
+   isData = true
+  item = null
+  waiter = null
+  isData = false
+ tail = {SynchronousQueue$TransferQueue$QNode@727} 
+  next = null
+  item = {Integer@724} 0
+  waiter = null
+  isData = true
+e = {Integer@724} 0
+s = {SynchronousQueue$TransferQueue$QNode@727} 
+isData = true
+t = {SynchronousQueue$TransferQueue$QNode@726} 
+ next = {SynchronousQueue$TransferQueue$QNode@727} 
+ item = null
+ waiter = null
+ isData = false
+h = {SynchronousQueue$TransferQueue$QNode@726} 
+ next = {SynchronousQueue$TransferQueue$QNode@727} 
+ item = null
+ waiter = null
+ isData = false
+tn = null
+head = {SynchronousQueue$TransferQueue$QNode@726} 
+ next = {SynchronousQueue$TransferQueue$QNode@727} 
+ item = null
+ waiter = null
+ isData = false
+t.next = {SynchronousQueue$TransferQueue$QNode@727} 
+ next = null
+ item = {Integer@724} 0
+ waiter = null
+ isData = true
+tail = {SynchronousQueue$TransferQueue$QNode@727} 
+ next = null
+ item = {Integer@724} 0
+ waiter = null
+ isData = true
+t.isData = false
+ */
+ advanceTail(t, s);
+ 
+ 
+ //178
+ ForkJoinPool.managedBlock(s);
+ 
+ 
+ ///////////////消费线程////////////////////////////
+ //150
+ /**
+ this = {SynchronousQueue$TransferQueue@722} 
+ head = {SynchronousQueue$TransferQueue$QNode@725} 
+  next = {SynchronousQueue$TransferQueue$QNode@730} 
+   next = null
+   item = {Integer@723} 0
+   waiter = {Thread@720} "Thread[生产线程:\t,5,main]"
+   isData = true
+  item = null
+  waiter = null
+  isData = false
+ tail = {SynchronousQueue$TransferQueue$QNode@730} 
+  next = null
+  item = {Integer@723} 0
+  waiter = {Thread@720} "Thread[生产线程:\t,5,main]"
+  isData = true
+e = null
+s = null
+isData = false
+t = {SynchronousQueue$TransferQueue$QNode@730} 
+ next = null
+ item = {Integer@723} 0
+ waiter = {Thread@720} "Thread[生产线程:\t,5,main]"
+ isData = true
+h = {SynchronousQueue$TransferQueue$QNode@725} 
+ next = {SynchronousQueue$TransferQueue$QNode@730} 
+  next = null
+  item = {Integer@723} 0
+  waiter = {Thread@720} "Thread[生产线程:\t,5,main]"
+  isData = true
+ item = null
+ waiter = null
+ isData = false
+head = {SynchronousQueue$TransferQueue$QNode@725} 
+ next = {SynchronousQueue$TransferQueue$QNode@730} 
+ item = null
+ waiter = null
+ isData = false
+t.next = null
+tail = {SynchronousQueue$TransferQueue$QNode@730} 
+ next = null
+ item = {Integer@723} 0
+ waiter = {Thread@720} "Thread[生产线程:\t,5,main]"
+ isData = true
+t.isData = true
+ */
+else if (h == t || t.isData == isData) {
+
+//195
+/**
+this = {SynchronousQueue$TransferQueue@722} 
+ head = {SynchronousQueue$TransferQueue$QNode@725} 
+  next = {SynchronousQueue$TransferQueue$QNode@730} 
+   next = null
+   item = null
+   waiter = {Thread@720} "Thread[生产线程:\t,5,main]"
+   isData = true
+  item = null
+  waiter = null
+  isData = false
+ tail = {SynchronousQueue$TransferQueue$QNode@730} 
+  next = null
+  item = null
+  waiter = {Thread@720} "Thread[生产线程:\t,5,main]"
+  isData = true
+e = null
+s = null
+isData = false
+t = {SynchronousQueue$TransferQueue$QNode@730} 
+ next = null
+ item = null
+ waiter = {Thread@720} "Thread[生产线程:\t,5,main]"
+ isData = true
+h = {SynchronousQueue$TransferQueue$QNode@725} 
+ next = {SynchronousQueue$TransferQueue$QNode@730} 
+  next = null
+  item = null
+  waiter = {Thread@720} "Thread[生产线程:\t,5,main]"
+  isData = true
+ item = null
+ waiter = null
+ isData = false
+m = {SynchronousQueue$TransferQueue$QNode@730} 
+ next = null
+ item = null
+ waiter = {Thread@720} "Thread[生产线程:\t,5,main]"
+ isData = true
+x = {Integer@723} 0
+ value = 0
+fulfilled = true
+m.waiter = {Thread@720} "Thread[生产线程:\t,5,main]"
+*/
+boolean fulfilled = ((isData == (x == null)) &&
+  x != m && m.casItem(x, e));
+  
+  
+// 198
+/**
+this = {SynchronousQueue$TransferQueue@722} 
+ head = {SynchronousQueue$TransferQueue$QNode@730} 
+  next = null
+  item = null
+  waiter = {Thread@720} "Thread[生产线程:\t,5,main]"
+  isData = true
+ tail = {SynchronousQueue$TransferQueue$QNode@730} 
+  next = null
+  item = null
+  waiter = {Thread@720} "Thread[生产线程:\t,5,main]"
+  isData = true
+e = null
+s = null
+isData = false
+t = {SynchronousQueue$TransferQueue$QNode@730} 
+ next = null
+ item = null
+ waiter = {Thread@720} "Thread[生产线程:\t,5,main]"
+ isData = true
+h = {SynchronousQueue$TransferQueue$QNode@725} 
+ next = {SynchronousQueue$TransferQueue$QNode@725} 
+  next = {SynchronousQueue$TransferQueue$QNode@725} 
+  item = null
+  waiter = null
+  isData = false
+ item = null
+ waiter = null
+ isData = false
+m = {SynchronousQueue$TransferQueue$QNode@730} 
+ next = null
+ item = null
+ waiter = {Thread@720} "Thread[生产线程:\t,5,main]"
+ isData = true
+x = {Integer@723} 0
+ value = 0
+fulfilled = true
+m.waiter = {Thread@720} "Thread[生产线程:\t,5,main]"
+*/
+advanceHead(h, m);   
+  
+  
+ 
