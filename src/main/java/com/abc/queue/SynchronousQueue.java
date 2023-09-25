@@ -5,9 +5,11 @@ import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.locks.LockSupport;
 
 public class SynchronousQueue<E> {
+    
     abstract static class Transferer<E> {
 
         abstract E transfer(E e);
+        
     }
 
     /**
@@ -18,6 +20,7 @@ public class SynchronousQueue<E> {
 
     /** Dual Queue */
     static final class TransferQueue<E> extends Transferer<E> {
+        
         /*
          * This extends Scherer-Scott dual queue algorithm, differing,
          * among other ways, by using modes within nodes rather than
@@ -96,6 +99,7 @@ public class SynchronousQueue<E> {
 
         /** Head of queue */
         transient volatile QNode head;
+        
         /** Tail of queue */
         transient volatile QNode tail;
 
