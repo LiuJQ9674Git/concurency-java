@@ -1,10 +1,12 @@
 package com.abc.queue;
+
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.VarHandle;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.locks.LockSupport;
 
 public class SynchronousQueue<E> {
+    
     abstract static class Transferer<E> {
 
         abstract E transfer(E e);
@@ -16,8 +18,10 @@ public class SynchronousQueue<E> {
      */
     static final long SPIN_FOR_TIMEOUT_THRESHOLD = 1023L;
 
-    /** Dual Queue */
+    /** Dual Queue 
+    */
     static final class TransferQueue<E> extends Transferer<E> {
+        
         /*
          * This extends Scherer-Scott dual queue algorithm, differing,
          * among other ways, by using modes within nodes rather than
@@ -27,8 +31,11 @@ public class SynchronousQueue<E> {
          * from non-null to null (for put) or vice versa (for take).
          */
 
-        /** Node class for TransferQueue. */
+        /** 
+        * Node class for TransferQueue. 
+        */
         static final class QNode implements ForkJoinPool.ManagedBlocker {
+            
             volatile QNode next;          // next node in queue
             volatile Object item;         // CAS'ed to or from null
             volatile Thread waiter;       // to control park/unpark
@@ -58,6 +65,9 @@ public class SynchronousQueue<E> {
                 return next == this;
             }
 
+
+            /** thread Setter null
+            **/
             void forgetWaiter() {
                 QWAITER.setOpaque(this, null);
             }
@@ -94,9 +104,12 @@ public class SynchronousQueue<E> {
             }
         }
 
-        /** Head of queue */
+        /**Head of queue 
+        */
         transient volatile QNode head;
-        /** Tail of queue */
+        
+        /** Tail of queue 
+        **/
         transient volatile QNode tail;
 
         TransferQueue() {
@@ -105,7 +118,7 @@ public class SynchronousQueue<E> {
             tail = h;
         }
 
-        /**
+        /** 
          * Tries to cas nh as new head; if successful, unlink
          * old head's next node to avoid garbage retention.
          */
@@ -115,7 +128,7 @@ public class SynchronousQueue<E> {
                 h.next = h; // forget old next
         }
 
-        /**
+        /** 
          * Tries to cas nt as new tail.
          */
         void advanceTail(QNode t, QNode nt) {
@@ -123,8 +136,7 @@ public class SynchronousQueue<E> {
                 QTAIL.compareAndSet(this, t, nt);
         }
 
-        /**
-         * Puts or takes an item.
+        /** Puts or takes an item.
          */
         @SuppressWarnings("unchecked")
         E transfer(E e) {
