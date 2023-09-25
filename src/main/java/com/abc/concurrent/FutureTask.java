@@ -25,7 +25,6 @@ public class FutureTask<V> implements RunnableFuture<V> {
     private static final int INTERRUPTING = 5;
     private static final int INTERRUPTED  = 6;
 
-    /** The underlying callable; nulled out after running */
     private Callable<V> callable;
 
     /** The result to return or exception to throw from get() */
