@@ -19,7 +19,9 @@ public class SynchronousQueue<E> {
      */
     static final long SPIN_FOR_TIMEOUT_THRESHOLD = 1023L;
 
-    /** Dual Queue */
+    /** 
+    * Dual Queue 
+    */
     static final class TransferQueue<E> extends Transferer<E> {
         
         /*
@@ -31,7 +33,10 @@ public class SynchronousQueue<E> {
          * from non-null to null (for put) or vice versa (for take).
          */
 
-        /** Node class for TransferQueue. */
+        /** 
+        * Node class for TransferQueue. 
+        *
+        */
         static final class QNode implements ForkJoinPool.ManagedBlocker {
             
             volatile QNode next;          // next node in queue
@@ -54,8 +59,6 @@ public class SynchronousQueue<E> {
                         QITEM.compareAndSet(this, cmp, val);
             }
 
-
-            
             /**
              * Returns true if this node is known to be off the queue
              * because its next pointer has been forgotten due to
@@ -105,10 +108,14 @@ public class SynchronousQueue<E> {
             }
         }
 
-        /** Head of queue */
+        /** 
+        * Head of queue 
+        */
         transient volatile QNode head;
         
-        /** Tail of queue */
+        /** 
+        * Tail of queue 
+        **/
         transient volatile QNode tail;
 
         TransferQueue() {
