@@ -36,8 +36,6 @@ public class FutureTask<V> implements RunnableFuture<V> {
     private volatile WaitNode waiters;
 
     /**
-     * Returns result or throws exception for completed task.
-     *
      * @param s completed state value
      */
     @SuppressWarnings("unchecked")
@@ -62,6 +60,9 @@ public class FutureTask<V> implements RunnableFuture<V> {
         this.state = NEW;       // ensure visibility of callable
     }
 
+    /**
+     * @throws CancellationException {@inheritDoc}
+     */
     public V get() throws InterruptedException, ExecutionException {
         int s = state;
         if (s <= COMPLETING)
@@ -136,7 +137,13 @@ public class FutureTask<V> implements RunnableFuture<V> {
     }
 
     /**
-     * finishCompletion 调用
+     * Protected method invoked when this task transitions to state
+     * {@code isDone} (whether normally or via cancellation). The
+     * default implementation does nothing.  Subclasses may override
+     * this method to invoke completion callbacks or perform
+     * bookkeeping. Note that you can query status inside the
+     * implementation of this method to determine whether this task
+     * has been cancelled.
      */
     protected void done() { }
 
