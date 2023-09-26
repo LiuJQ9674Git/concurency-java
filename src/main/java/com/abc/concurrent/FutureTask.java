@@ -101,8 +101,7 @@ public class FutureTask<V> implements RunnableFuture<V> {
         }
     }
 
-    /**
-     * Runnable
+    /**Runnable
      */
     public void run() {
         if (state != NEW ||
@@ -203,7 +202,6 @@ public class FutureTask<V> implements RunnableFuture<V> {
         }
 
         done();
-
         callable = null;        // to reduce footprint
     }
     
@@ -254,12 +252,10 @@ public class FutureTask<V> implements RunnableFuture<V> {
         }
         return true;
     }
-
     public V get(long timeout, TimeUnit unit)
             throws InterruptedException, ExecutionException, TimeoutException {
         return null;
     }
-    // VarHandle mechanics
     private static final VarHandle STATE;
     private static final VarHandle RUNNER;
     private static final VarHandle WAITERS;
