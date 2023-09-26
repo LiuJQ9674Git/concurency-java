@@ -101,6 +101,9 @@ public class FutureTask<V> implements RunnableFuture<V> {
         }
     }
 
+    /**
+     * Runnable
+     */
     public void run() {
         if (state != NEW ||
                 !RUNNER.compareAndSet(this, null, Thread.currentThread()))
@@ -129,8 +132,9 @@ public class FutureTask<V> implements RunnableFuture<V> {
             // state must be re-read after nulling runner to prevent
             // leaked interrupts
             int s = state;
-            if (s >= INTERRUPTING)
+            if (s >= INTERRUPTING) {
                 handlePossibleCancellationInterrupt(s);
+            }
         }
     }
 
@@ -224,11 +228,9 @@ public class FutureTask<V> implements RunnableFuture<V> {
             }
         }
     }
-
     public boolean isCancelled() {
         return state >= CANCELLED;
     }
-
     public boolean isDone() {
         return state != NEW;
     }
@@ -257,7 +259,6 @@ public class FutureTask<V> implements RunnableFuture<V> {
             throws InterruptedException, ExecutionException, TimeoutException {
         return null;
     }
-
     // VarHandle mechanics
     private static final VarHandle STATE;
     private static final VarHandle RUNNER;
