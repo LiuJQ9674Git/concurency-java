@@ -62,7 +62,8 @@ public class StampedLockTest {
     void anysDistanceFromOrigin(){
         Thread t=new Thread(
                 ()->{
-                    distanceFromOrigin();
+                    moveIfAtOrigin2(10,30);
+                    //distanceFromOrigin();
         });
         t.start();
     }
@@ -74,8 +75,6 @@ public class StampedLockTest {
             stampedLockTest.anysDistanceFromOrigin();
         }
     }
-
-
 
     void moveIfAtOrigin2(double newX, double newY) {
         long stamp = sl.readLock();
@@ -126,11 +125,19 @@ public class StampedLockTest {
             stampedLockTest.anysMove();
         }
     }
+
+    static  void writeRead(){
+        StampedLockTest stampedLockTest=new StampedLockTest();
+        stampedLockTest.anysDistanceFromOrigin();
+       // stampedLockTest.anysMove();
+    }
+
     public static void main(String[] args){
         //tryAcquireWrite();
         //tryTryOptimisticRead();
 
-        handleMoveeadLock();
+        //handleMoveeadLock();
+        writeRead();
 
     }
 }

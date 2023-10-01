@@ -20,6 +20,8 @@ import java.util.concurrent.locks.LockSupport;
  * adapted for a garbage-collected environment, with support for
  * interior node deletion (to support e.g. remove(Object)).  For
  * explanation, read the paper.
+ * 这是对Michael&Scott算法的修改，适用于垃圾收集环境，支持内部节点删除（例如支持remove（Object））。
+ * 如需解释，请阅读论文。
  *
  * Note that like most non-blocking algorithms in this package,
  * this implementation relies on the fact that in garbage
@@ -28,9 +30,9 @@ import java.util.concurrent.locks.LockSupport;
  * pointers" or related techniques seen in versions used in
  * non-GC'ed settings.
  *
- *注意，像该包中的大多数非阻塞算法一样，该实现依赖于在垃圾中收集的系统，
- *不存在ABA问题的可能性到回收节点，因此无需使用“计数指针”或在中使用的版本中看
- *到的相关技术非GC’ed设置。
+ * 注意，像该包中的大多数非阻塞算法一样，该实现依赖于在垃圾中收集的系统，
+ * 不存在ABA问题的可能性到回收节点，因此无需使用“计数指针”或在中使用的版本中看
+ * 到的相关技术非GC’ed设置。
  * The fundamental invariants are:基本不变量是：
  * - There is exactly one (last) Node with a null next reference,
  *   which is CASed when enqueueing.  This last Node can be
@@ -50,6 +52,10 @@ import java.util.concurrent.locks.LockSupport;
  *   head to advance.  A dequeued Node may remain in use
  *   indefinitely due to creation of an Iterator or simply a
  *   poll() that has lost its time slice.
+ *   队列中包含的元素是节点中可从头访问的非null项。CAS将Node的项引用原子化地从队列中删除。
+ *   所有元素从头部的可达性必须保持不变，即使在导致头部前进的同时修改的情况下也是如此。
+ *   由于创建了一个Iterator或只是一个丢失了时间片的poll（），
+ *   出队节点可能会无限期地保持使用状态。
  *
  * The above might appear to imply that all Nodes are GC-reachable
  * from a predecessor dequeued Node.  That would cause two problems:
@@ -62,6 +68,13 @@ import java.util.concurrent.locks.LockSupport;
  * be of the kind understood by the GC.  We use the trick of
  * linking a Node that has just been dequeued to itself.  Such a
  * self-link implicitly means to advance to head.
+ * 上面的内容可能意味着所有节点都可以从前一个排队节点GC访问。这将导致两个问题：
+ * -允许流氓迭代器导致无限内存保留
+ * -如果一个节点在活动期间被终身使用，则会导致旧节点与新节点的跨代链接，
+ * 而这一代GC很难处理，从而导致重复的主要收集。
+ * 然而，只有未删除的节点才需要从退出队列的节点访问，
+ * 并且可达性不一定必须是GC所理解的那种。
+ * 我们使用的技巧是将刚刚出列的节点链接到它自己。这种自我链接隐含着向头部前进的意思。
  *
  * Both head and tail are permitted to lag.  In fact, failing to
  * update them every time one could is a significant optimization
@@ -96,6 +109,9 @@ import java.util.concurrent.locks.LockSupport;
  * When constructing a Node (before enqueuing it) we avoid paying
  * for a volatile write to item.  This allows the cost of enqueue
  * to be "one-and-a-half" CASes.
+ *
+ * 在构造Node时（在将其排队之前），我们避免为易失性volatile的写入项time。
+ * 这使得排队的费用为“一个半”CASes。
  *
  * Both head and tail may or may not point to a Node with a
  * non-null item.  If the queue is empty, all items must of course
