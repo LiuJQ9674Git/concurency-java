@@ -6,5 +6,6 @@ public class ConcurrentLinkedTest {
         concurrentLinked.offer(1);
         concurrentLinked.offer(2);
         concurrentLinked.offer(3);
+        concurrentLinked.offer(4);
     }
 }
